@@ -21,8 +21,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import br.com.gersonsilvafilho.lunchapp.Injection
 import br.com.gersonsilvafilho.lunchapp.R
 import br.com.gersonsilvafilho.lunchapp.util.EspressoIdlingResource
@@ -31,6 +29,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget
+import kotlinx.android.synthetic.main.fragment_detail.*
 
 /**
  * Main UI for the Restaurant detail screen.
@@ -38,12 +37,6 @@ import com.bumptech.glide.request.target.GlideDrawableImageViewTarget
 class RestaurantDetailFragment : Fragment(), RestaurantDetailContract.View {
 
     private var mActionsListener: RestaurantDetailContract.UserActionsListener? = null
-
-    private var mDetailTitle: TextView? = null
-
-    private var mDetailDescription: TextView? = null
-
-    private var mDetailImage: ImageView? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -53,9 +46,6 @@ class RestaurantDetailFragment : Fragment(), RestaurantDetailContract.View {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val root = inflater!!.inflate(R.layout.fragment_detail, container, false)
-        mDetailTitle = root.findViewById(R.id.restaurant_detail_title) as TextView
-        mDetailDescription = root.findViewById(R.id.restaurant_detail_description) as TextView
-        mDetailImage = root.findViewById(R.id.restaurant_detail_image) as ImageView
         return root
     }
 
@@ -67,27 +57,27 @@ class RestaurantDetailFragment : Fragment(), RestaurantDetailContract.View {
 
     override fun setProgressIndicator(active: Boolean) {
         if (active) {
-            mDetailTitle!!.text = ""
-            mDetailDescription!!.text = getString(R.string.loading)
+            restaurant_detail_title!!.text = ""
+            restaurant_detail_description!!.text = getString(R.string.loading)
         }
     }
 
     override fun hideDescription() {
-        mDetailDescription!!.visibility = View.GONE
+        restaurant_detail_description!!.visibility = View.GONE
     }
 
     override fun hideTitle() {
-        mDetailTitle!!.visibility = View.GONE
+        restaurant_detail_title!!.visibility = View.GONE
     }
 
     override fun showDescription(description: String) {
-        mDetailDescription!!.visibility = View.VISIBLE
-        mDetailDescription!!.text = description
+        restaurant_detail_description!!.visibility = View.VISIBLE
+        restaurant_detail_description!!.text = description
     }
 
     override fun showTitle(title: String) {
-        mDetailTitle!!.visibility = View.VISIBLE
-        mDetailTitle!!.text = title
+        restaurant_detail_title!!.visibility = View.VISIBLE
+        restaurant_detail_title!!.text = title
     }
 
     override fun showImage(imageUrl: String) {
@@ -95,14 +85,14 @@ class RestaurantDetailFragment : Fragment(), RestaurantDetailContract.View {
         // is used to specify when the app is idle.
         EspressoIdlingResource.increment() // App is busy until further notice.
 
-        mDetailImage!!.visibility = View.VISIBLE
+        restaurant_detail_image!!.visibility = View.VISIBLE
 
         // This app uses Glide for image loading
         Glide.with(this)
                 .load(imageUrl)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
-                .into(object : GlideDrawableImageViewTarget(mDetailImage!!) {
+                .into(object : GlideDrawableImageViewTarget(restaurant_detail_image!!) {
                     override fun onResourceReady(resource: GlideDrawable,
                                                  animation: GlideAnimation<in GlideDrawable>?) {
                         super.onResourceReady(resource, animation)
@@ -112,13 +102,13 @@ class RestaurantDetailFragment : Fragment(), RestaurantDetailContract.View {
     }
 
     override fun hideImage() {
-        mDetailImage!!.setImageDrawable(null)
-        mDetailImage!!.visibility = View.GONE
+        restaurant_detail_image!!.setImageDrawable(null)
+        restaurant_detail_image!!.visibility = View.GONE
     }
 
     override fun showMissingRestaurant() {
-        mDetailTitle!!.text = ""
-        mDetailDescription!!.text = getString(R.string.no_data)
+        restaurant_detail_title!!.text = ""
+        restaurant_detail_description!!.text = getString(R.string.no_data)
     }
 
     companion object {

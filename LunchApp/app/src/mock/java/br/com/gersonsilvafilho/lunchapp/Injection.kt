@@ -1,6 +1,10 @@
+package br.com.gersonsilvafilho.lunchapp
+
 import br.com.gersonsilvafilho.lunchapp.data.FakeRestaurantServiceApiImpl
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepositories
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepository
+
+
 
 /**
  * Enables injection of mock implementations for [ImageFile] and
