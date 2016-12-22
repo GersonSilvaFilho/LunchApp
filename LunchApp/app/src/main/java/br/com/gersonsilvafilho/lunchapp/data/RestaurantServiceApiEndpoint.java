@@ -32,6 +32,8 @@ public class RestaurantServiceApiEndpoint {
         addRestaurant("Restaurant4", "Good mood", null);
     }
 
+
+
     private final static ArrayMap<String, Restaurant> DATA;
 
     private static void addRestaurant(String title, String description, String imageUrl) {

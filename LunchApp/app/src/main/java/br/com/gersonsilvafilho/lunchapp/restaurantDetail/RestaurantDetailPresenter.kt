@@ -16,6 +16,7 @@
 
 package br.com.gersonsilvafilho.lunchapp.restaurantDetail
 
+import android.graphics.Bitmap
 import br.com.gersonsilvafilho.lunchapp.data.Restaurant
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepository
 import com.google.common.base.Preconditions.checkNotNull
@@ -73,11 +74,11 @@ class RestaurantDetailPresenter(RestaurantsRepository: RestaurantRepository,
             mRestaurantsDetailView.showDescription(description.toString())
         }
 
-        if (imageUrl != null) {
-            mRestaurantsDetailView.showImage(imageUrl)
-        } else {
-            mRestaurantsDetailView.hideImage()
-        }
+        mRestaurantsRepository.getRestaurantImageBitmap(Restaurant.id, 200, 200, object : RestaurantRepository.GetRestaurantImageCallback<Bitmap> {
+            override fun onRestaurantImageLoaded(bitmap: Bitmap) {
+                mRestaurantsDetailView.showImageBitmap(bitmap)
+            }
+        })
 
     }
 }

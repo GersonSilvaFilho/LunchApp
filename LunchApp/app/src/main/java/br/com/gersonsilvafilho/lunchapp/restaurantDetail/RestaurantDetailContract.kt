@@ -16,6 +16,8 @@
 
 package br.com.gersonsilvafilho.lunchapp.restaurantDetail
 
+import android.graphics.Bitmap
+
 /**
  * This specifies the contract between the view and the presenter.
  */
@@ -32,6 +34,8 @@ interface RestaurantDetailContract {
         fun showTitle(title: String)
 
         fun showImage(imageUrl: String)
+
+        fun showImageBitmap(bitmap: Bitmap)
 
         fun hideImage()
 

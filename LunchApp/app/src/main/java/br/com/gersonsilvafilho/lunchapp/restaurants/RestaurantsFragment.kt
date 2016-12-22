@@ -36,7 +36,7 @@ class RestaurantsFragment : Fragment(), RestaurantContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mListAdapter = RestaurantAdapter(ArrayList<Restaurant>(0), mItemListener)
-        mActionsListener = RestaurantPresenter(Injection.provideRestaurantsRepository(), this)
+        mActionsListener = RestaurantPresenter(Injection.provideRestaurantsRepository(this.context), this)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,

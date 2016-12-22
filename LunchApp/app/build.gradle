@@ -87,6 +87,9 @@ dependencies {
 
     //Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    //Google Places
+    compile "com.google.android.gms:play-services:$rootProject.ext.googlePlacesVersion"
 }
 
 /*
