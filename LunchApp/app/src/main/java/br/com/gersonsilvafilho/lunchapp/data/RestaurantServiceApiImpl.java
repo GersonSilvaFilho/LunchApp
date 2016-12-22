@@ -24,7 +24,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 /**
  * Implementation of the Restaurants Service API that calls near restaurants using GooglePlaceAPI
@@ -33,6 +38,7 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
 
     private GoogleApiClient mGoogleApiClient;
     private String LOG_TAG = "RestaurantService";
+    private VotesService votesService;
 
 
     public RestaurantServiceApiImpl(Context context)
@@ -47,6 +53,8 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
                 .build();
 
         mGoogleApiClient.connect();
+
+        votesService = new VotesService();
     }
 
     @Override
@@ -65,7 +73,7 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
         result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
             @Override
             public void onResult(PlaceLikelihoodBuffer likelyPlaces) {
-                 List<Restaurant> restaurants = new ArrayList<>();
+                 final List<Restaurant> restaurants = new ArrayList<>();
 
                 for (PlaceLikelihood placeLikelihood : likelyPlaces) {
                     if(placeLikelihood.getPlace().getPlaceTypes().contains(Place.TYPE_RESTAURANT) ||
@@ -83,7 +91,34 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
                     }
                 }
 
-                callback.onLoaded(restaurants);
+                //Get votes from the other API
+                votesService.GetVotesFromDay(new Date(), new Callback<VotesList>() {
+                            @Override
+                            public void onResponse(Response<VotesList> response, Retrofit retrofit) {
+                                if(response.body() == null || response.body().votes == null )
+                                {
+                                    callback.onLoaded(restaurants);
+                                    return;
+                                }
+
+                                for (Restaurant restaurant: restaurants)
+                                {
+                                    for(Vote vote: response.body().votes)
+                                    {
+                                        if(vote.restaurantId == restaurant.getId())
+                                        {
+                                            restaurant.incrementVotes();
+                                        }
+                                    }
+                                }
+                                callback.onLoaded(restaurants);
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+                                //TODO
+                            }
+                        });
                 //release object
                 likelyPlaces.release();
             }
@@ -158,11 +193,8 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
                 + connectionResult.getErrorCode());
     }
 
-
-
-
     @Override
-    public void getRestaurantImageBitmap(@NotNull String RestaurantId,@NotNull final int imageHeight, @NotNull final int imageWidth, @NotNull final RestaurantsImageUrlCallback<Bitmap> callback) {
+    public void getRestaurantImageBitmap(@NotNull String RestaurantId, final int imgHeight, final int imageWidth, @NotNull final RestaurantsServiceCallback<Bitmap> callback) {
         PendingResult<PlacePhotoMetadataResult> result = Places.GeoDataApi.getPlacePhotos(mGoogleApiClient, RestaurantId);
         result.setResultCallback(new ResultCallback<PlacePhotoMetadataResult>() {
             @Override
@@ -175,17 +207,34 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
                 if (photoMetadataBuffer.getCount() > 0) {
                     // Display the first bitmap in an ImageView in the size of the view
                     photoMetadataBuffer.get(0)
-                            .getScaledPhoto(mGoogleApiClient, imageWidth,imageHeight)
+                            .getScaledPhoto(mGoogleApiClient, imageWidth,imgHeight)
                             .setResultCallback(new ResultCallback<PlacePhotoResult>() {
-                               @Override
-                               public void onResult(PlacePhotoResult placePhotoResult) {
-                                   if (!placePhotoResult.getStatus().isSuccess()) {
-                                       return;
-                                   }
-                                   callback.onLoaded(placePhotoResult.getBitmap());
-                               }
+                                @Override
+                                public void onResult(PlacePhotoResult placePhotoResult) {
+                                    if (!placePhotoResult.getStatus().isSuccess()) {
+                                        return;
+                                    }
+                                    callback.onLoaded(placePhotoResult.getBitmap());
+                                }
                             });
                 }
+            }
+        });
+    }
+
+    @Override
+    public void sendRestaurantVote(@NotNull String restaurantId, @NotNull final RestaurantsServiceCallback<Boolean> callback) {
+        Vote vote = new Vote("testUser", restaurantId, new Date().getTime());
+        votesService.SendVote(vote, new Callback<Boolean>() {
+            @Override
+            public void onResponse(Response<Boolean> response, Retrofit retrofit) {
+                callback.onLoaded(response.body().booleanValue());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                //TODO
+                callback.onLoaded(false);
             }
         });
     }

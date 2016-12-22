@@ -29,7 +29,7 @@ class RestaurantAdapter(restaurants: List<Restaurant>, private val mItemListener
         val restaurant = mRestaurants!![position]
 
         viewHolder.title.setText(restaurant.title);
-        viewHolder.description.setText(restaurant.description);
+        viewHolder.votes.setText(restaurant.votes.toString());
     }
 
     fun replaceData(restaurants: List<Restaurant>) {
@@ -53,11 +53,11 @@ class RestaurantAdapter(restaurants: List<Restaurant>, private val mItemListener
 
         var title: TextView
 
-        var description: TextView
+        var votes: TextView
 
         init {
             title = itemView.findViewById(R.id.restaurant_detail_title) as TextView
-            description = itemView.findViewById(R.id.restaurant_detail_description) as TextView
+            votes = itemView.findViewById(R.id.restaurant_votes) as TextView
             itemView.setOnClickListener(this)
         }
 

@@ -43,4 +43,5 @@ ext {
     rulesVersion = '0.5'
     espressoVersion = '2.2.2'
     googlePlacesVersion = '10.0.1'
+    retrofitVersions = '2.0.0-beta2'
 }

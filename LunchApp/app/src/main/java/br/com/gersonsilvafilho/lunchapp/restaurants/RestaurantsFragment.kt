@@ -2,6 +2,7 @@ package br.com.gersonsilvafilho.lunchapp.restaurants
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
@@ -24,6 +25,7 @@ import java.util.*
  * create an instance of this fragment.
  */
 class RestaurantsFragment : Fragment(), RestaurantContract.View {
+
 
     private var mActionsListener: RestaurantContract.UserActionsListener? = null
 
@@ -96,5 +98,10 @@ class RestaurantsFragment : Fragment(), RestaurantContract.View {
     override fun onResume() {
         super.onResume()
         mActionsListener?.loadRestaurants(false)
+        showSnackbarText("Long click to add a Vote")
+    }
+
+    override fun showSnackbarText(textToShow: String) {
+        Snackbar.make(this.view!!, textToShow, Snackbar.LENGTH_LONG).show()
     }
 }

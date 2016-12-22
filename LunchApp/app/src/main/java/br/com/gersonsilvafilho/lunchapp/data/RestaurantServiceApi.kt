@@ -28,15 +28,13 @@ interface RestaurantServiceApi {
         fun onLoaded(Restaurants: T)
     }
 
-    interface RestaurantsImageUrlCallback<T> {
-        fun onLoaded(Bitmap: T)
-    }
-
     fun getAllRestaurant(callback: RestaurantsServiceCallback<List<Restaurant>>)
 
     fun getRestaurant(RestaurantId: String, callback: RestaurantsServiceCallback<Restaurant>)
 
-    fun getRestaurantImageBitmap(RestaurantId: String, imgHeight: Int, imageWidth: Int, callback: RestaurantsImageUrlCallback<Bitmap>)
+    fun getRestaurantImageBitmap(RestaurantId: String, imgHeight: Int, imageWidth: Int, callback: RestaurantsServiceCallback<Bitmap>)
 
     fun saveRestaurant(restaurant: Restaurant)
+
+    fun sendRestaurantVote(restaurantId: String, callback: RestaurantsServiceCallback<Boolean>)
 }

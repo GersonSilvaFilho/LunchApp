@@ -15,6 +15,8 @@ interface RestaurantContract {
 
 
         fun showRestaurantDetailUi(RestaurantId: String)
+
+        fun showSnackbarText(textToShow: String)
     }
 
     interface UserActionsListener {

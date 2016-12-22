@@ -18,6 +18,7 @@ package br.com.gersonsilvafilho.lunchapp.restaurantDetail
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +50,14 @@ class RestaurantDetailFragment : Fragment(), RestaurantDetailContract.View {
                               savedInstanceState: Bundle?): View? {
         val root = inflater!!.inflate(R.layout.fragment_detail, container, false)
         return root
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        fab!!.setOnClickListener { view ->
+            mActionsListener?.fabButtonClick()
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+        }
     }
 
     override fun onResume() {
@@ -128,5 +137,9 @@ class RestaurantDetailFragment : Fragment(), RestaurantDetailContract.View {
 
     override fun showImageBitmap(bitmap: Bitmap) {
         restaurant_detail_image.setImageBitmap(bitmap)
+    }
+
+    override fun showSnackbarText(textToShow: String) {
+        Snackbar.make(this.view!!, textToShow, Snackbar.LENGTH_LONG).show()
     }
 }

@@ -28,6 +28,8 @@ import com.google.common.base.Preconditions.checkNotNull
 class RestaurantDetailPresenter(RestaurantsRepository: RestaurantRepository,
                                 RestaurantDetailView: RestaurantDetailContract.View) : RestaurantDetailContract.UserActionsListener {
 
+    private var mRestaurant : Restaurant? = null;
+
     private val mRestaurantsRepository: RestaurantRepository
 
     private val mRestaurantsDetailView: RestaurantDetailContract.View
@@ -43,15 +45,18 @@ class RestaurantDetailPresenter(RestaurantsRepository: RestaurantRepository,
             return
         }
 
+
+
         mRestaurantsDetailView.setProgressIndicator(true)
         mRestaurantsRepository.getRestaurant(RestaurantId, object : RestaurantRepository.GetRestaurantCallback {
             override fun onRestaurantsLoaded(Restaurant: Restaurant?) {
-            mRestaurantsDetailView.setProgressIndicator(false)
-            if (null == Restaurant) {
-                mRestaurantsDetailView.showMissingRestaurant()
-            } else {
-                showRestaurant(Restaurant)
-            }
+                mRestaurant = Restaurant!!
+                mRestaurantsDetailView.setProgressIndicator(false)
+                if (null == Restaurant) {
+                    mRestaurantsDetailView.showMissingRestaurant()
+                } else {
+                    showRestaurant(Restaurant)
+                }
             }
         })
 
@@ -60,25 +65,40 @@ class RestaurantDetailPresenter(RestaurantsRepository: RestaurantRepository,
     private fun showRestaurant(Restaurant: Restaurant) {
         val title = Restaurant.title
         val description = Restaurant.description
-        val imageUrl = Restaurant.imageUrl
 
         if (title != null && title.isEmpty()) {
             mRestaurantsDetailView.hideTitle()
         } else {
-            mRestaurantsDetailView.showTitle(title.toString())
+            mRestaurantsDetailView.showTitle(title!!)
         }
 
         if (description != null && description.isEmpty()) {
             mRestaurantsDetailView.hideDescription()
         } else {
-            mRestaurantsDetailView.showDescription(description.toString())
+            mRestaurantsDetailView.showDescription(description!!)
         }
 
-        mRestaurantsRepository.getRestaurantImageBitmap(Restaurant.id, 200, 200, object : RestaurantRepository.GetRestaurantImageCallback<Bitmap> {
+        mRestaurantsRepository.getRestaurantImageBitmap(Restaurant.id, 200, 200, object : RestaurantRepository.GetRestaurantImageCallback{
             override fun onRestaurantImageLoaded(bitmap: Bitmap) {
                 mRestaurantsDetailView.showImageBitmap(bitmap)
             }
         })
+    }
 
+    override fun fabButtonClick()
+    {
+        mRestaurantsRepository.sendRestaurantVote(mRestaurant?.id!!, object : RestaurantRepository.SendRestaurantVoteCallback{
+            override fun onRestaurantVote(voteIsOk: Boolean) {
+                if (voteIsOk)
+                {
+                    //Show ok!
+                }
+                else
+                {
+                    //Show Error!
+                }
+            }
+
+        })
     }
 }
