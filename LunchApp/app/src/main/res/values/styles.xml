@@ -25,4 +25,8 @@
         <item name="android:orientation">vertical</item>
     </style>
 
+    <style name="Toolbar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
 </resources>

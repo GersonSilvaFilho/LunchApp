@@ -14,7 +14,7 @@ interface RestaurantContract {
         fun showRestaurants(restaurants: List<Restaurant>)
 
 
-        fun showNoteDetailUi(noteId: String)
+        fun showRestaurantDetailUi(RestaurantId: String)
     }
 
     interface UserActionsListener {

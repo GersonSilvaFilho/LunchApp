@@ -24,7 +24,7 @@ import com.google.common.base.Preconditions.checkNotNull
 
 
 /**
- * Listens to user actions from the UI ([NotesFragment]), retrieves the data and updates the
+ * Listens to user actions from the UI ([RestaurantsFragment]), retrieves the data and updates the
  * UI as required.
  */
 class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurantView: RestaurantContract.View) : RestaurantContract.UserActionsListener {
@@ -60,8 +60,8 @@ class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurant
     }
 
     override fun openRestaurantDetails(requestedRestaurant: Restaurant) {
-        checkNotNull<Restaurant>(requestedRestaurant, "requestedNote cannot be null!")
-        mRestaurantView.showNoteDetailUi(requestedRestaurant.id)
+        checkNotNull<Restaurant>(requestedRestaurant, "requestedRestaurant cannot be null!")
+        mRestaurantView.showRestaurantDetailUi(requestedRestaurant.id)
     }
 
 }

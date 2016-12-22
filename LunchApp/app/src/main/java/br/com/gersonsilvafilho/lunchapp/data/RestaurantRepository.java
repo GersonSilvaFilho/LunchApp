@@ -21,25 +21,25 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 /**
- * Main entry point for accessing notes data.
+ * Main entry point for accessing Restaurants data.
  */
 public interface RestaurantRepository {
 
     interface LoadRestaurantsCallback {
 
-        void onRestaurantsLoaded(List<Restaurant> notes);
+        void onRestaurantsLoaded(List<Restaurant> Restaurants);
     }
 
     interface GetRestaurantCallback {
 
-        void onRestaurantsLoaded(Restaurant note);
+        void onRestaurantsLoaded(Restaurant Restaurant);
     }
 
     void getRestaurants(@NonNull LoadRestaurantsCallback callback);
 
-    void getRestaurant(@NonNull String noteId, @NonNull GetRestaurantCallback callback);
+    void getRestaurant(@NonNull String RestaurantId, @NonNull GetRestaurantCallback callback);
 
-    void saveRestaurant(@NonNull Restaurant note);
+    void saveRestaurant(@NonNull Restaurant Restaurant);
 
     void refreshData();
 

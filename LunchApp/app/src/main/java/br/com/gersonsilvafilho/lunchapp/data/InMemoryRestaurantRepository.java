@@ -11,7 +11,7 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Concrete implementation to load notes from the a data source.
+ * Concrete implementation to load Restaurants from the a data source.
  */
 public class InMemoryRestaurantRepository implements RestaurantRepository {
 
@@ -22,7 +22,7 @@ public class InMemoryRestaurantRepository implements RestaurantRepository {
      * package.
      */
     @VisibleForTesting
-    List<Restaurant> mCachedNotes;
+    List<Restaurant> mCachedRestaurants;
 
     public InMemoryRestaurantRepository(@NonNull RestaurantServiceApi restaurantServiceApi) {
         mRestaurantServiceApi = checkNotNull(restaurantServiceApi);
@@ -32,17 +32,17 @@ public class InMemoryRestaurantRepository implements RestaurantRepository {
     public void getRestaurants(@NonNull final LoadRestaurantsCallback callback) {
         checkNotNull(callback);
         // Load from API only if needed.
-        if (mCachedNotes == null) {
+        if (mCachedRestaurants == null) {
             mRestaurantServiceApi.getAllRestaurant(new RestaurantServiceApi.RestaurantsServiceCallback<List<Restaurant>>()
             {
                 @Override
                 public void onLoaded(List<Restaurant> restaurants) {
-                    mCachedNotes = ImmutableList.copyOf(restaurants);
-                    callback.onRestaurantsLoaded(mCachedNotes);
+                    mCachedRestaurants = ImmutableList.copyOf(restaurants);
+                    callback.onRestaurantsLoaded(mCachedRestaurants);
                 }
             });
         } else {
-            callback.onRestaurantsLoaded(mCachedNotes);
+            callback.onRestaurantsLoaded(mCachedRestaurants);
         }
     }
 
@@ -54,11 +54,11 @@ public class InMemoryRestaurantRepository implements RestaurantRepository {
     }
 
     @Override
-    public void getRestaurant(@NonNull final String noteId, @NonNull final GetRestaurantCallback callback) {
-        checkNotNull(noteId);
+    public void getRestaurant(@NonNull final String RestaurantId, @NonNull final GetRestaurantCallback callback) {
+        checkNotNull(RestaurantId);
         checkNotNull(callback);
-        // Load notes matching the id always directly from the API.
-        mRestaurantServiceApi.getRestaurant(noteId, new RestaurantServiceApi.RestaurantsServiceCallback<Restaurant>()
+        // Load Restaurants matching the id always directly from the API.
+        mRestaurantServiceApi.getRestaurant(RestaurantId, new RestaurantServiceApi.RestaurantsServiceCallback<Restaurant>()
         {
             @Override
             public void onLoaded(Restaurant restaurant) {
@@ -69,7 +69,7 @@ public class InMemoryRestaurantRepository implements RestaurantRepository {
 
     @Override
     public void refreshData() {
-        mCachedNotes = null;
+        mCachedRestaurants = null;
     }
 
 }

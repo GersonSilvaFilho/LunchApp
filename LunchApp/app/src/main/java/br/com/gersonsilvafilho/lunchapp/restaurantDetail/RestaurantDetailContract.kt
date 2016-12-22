@@ -14,24 +14,34 @@
  * limitations under the License.
  */
 
-package br.com.gersonsilvafilho.lunchapp.data;
-
-import java.util.List;
+package br.com.gersonsilvafilho.lunchapp.restaurantDetail
 
 /**
- * Defines an interface to the service API that is used by this application. All data request should
- * be piped through this interface.
+ * This specifies the contract between the view and the presenter.
  */
-public interface RestaurantServiceApi {
+interface RestaurantDetailContract {
 
-    interface RestaurantsServiceCallback<T> {
+    interface View {
 
-        void onLoaded(T Restaurants);
+        fun setProgressIndicator(active: Boolean)
+
+        fun showMissingRestaurant()
+
+        fun hideTitle()
+
+        fun showTitle(title: String)
+
+        fun showImage(imageUrl: String)
+
+        fun hideImage()
+
+        fun hideDescription()
+
+        fun showDescription(description: String)
     }
 
-    void getAllRestaurant(RestaurantsServiceCallback<List<Restaurant>> callback);
+    interface UserActionsListener {
 
-    void getRestaurant(String RestaurantId, RestaurantsServiceCallback<Restaurant> callback);
-
-    void saveRestaurant(Restaurant restaurant);
+        fun openRestaurant(RestaurantId: String?)
+    }
 }

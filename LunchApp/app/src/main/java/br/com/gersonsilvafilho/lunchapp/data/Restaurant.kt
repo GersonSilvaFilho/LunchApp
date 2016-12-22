@@ -17,11 +17,11 @@ class Restaurant @JvmOverloads constructor(val title: String?, val description: 
     override fun equals(o: Any?): Boolean {
         if (this === o) return true
         if (o == null || javaClass != o.javaClass) return false
-        val note = o as Restaurant?
-        return Objects.equal(id, note!!.id) &&
-                Objects.equal(title, note.title) &&
-                Objects.equal(description, note.description) &&
-                Objects.equal(imageUrl, note.imageUrl)
+        val Restaurant = o as Restaurant?
+        return Objects.equal(id, Restaurant!!.id) &&
+                Objects.equal(title, Restaurant.title) &&
+                Objects.equal(description, Restaurant.description) &&
+                Objects.equal(imageUrl, Restaurant.imageUrl)
     }
 
     override fun hashCode(): Int {

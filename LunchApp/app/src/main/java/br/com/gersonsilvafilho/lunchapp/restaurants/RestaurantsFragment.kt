@@ -1,6 +1,6 @@
 package br.com.gersonsilvafilho.lunchapp.restaurants
 
-import Injection
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -8,8 +8,10 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import br.com.gersonsilvafilho.lunchapp.Injection
 import br.com.gersonsilvafilho.lunchapp.R
 import br.com.gersonsilvafilho.lunchapp.data.Restaurant
+import br.com.gersonsilvafilho.lunchapp.restaurantDetail.RestaurantDetailActivity
 import kotlinx.android.synthetic.main.fragment_restaurants.*
 import java.util.*
 
@@ -34,7 +36,7 @@ class RestaurantsFragment : Fragment(), RestaurantContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mListAdapter = RestaurantAdapter(ArrayList<Restaurant>(0), mItemListener)
-        mActionsListener = RestaurantPresenter(Injection.provideNotesRepository(), this)
+        mActionsListener = RestaurantPresenter(Injection.provideRestaurantsRepository(), this)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -85,8 +87,10 @@ class RestaurantsFragment : Fragment(), RestaurantContract.View {
         mListAdapter?.replaceData(restaurants)
     }
 
-    override fun showNoteDetailUi(noteId: String) {
-
+    override fun showRestaurantDetailUi(RestaurantId: String) {
+        val intent = Intent(context, RestaurantDetailActivity::class.java)
+        intent.putExtra(RestaurantDetailActivity.EXTRA_RESTAURANT_ID, RestaurantId)
+        startActivity(intent)
     }
 
     override fun onResume() {

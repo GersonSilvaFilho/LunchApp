@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementation of the Notes Service API that adds a latency simulating network.
+ * Implementation of the Restaurants Service API that adds a latency simulating network.
  */
 public class RestaurantServiceApiImpl implements RestaurantServiceApi {
 
@@ -47,8 +47,8 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi {
     @Override
     public void getRestaurant(final String restaurantId, final RestaurantsServiceCallback callback) {
         //TODO: Add network latency here too.
-        Restaurant note = RESTAURANT_SERVICE_DATA.get(restaurantId);
-        callback.onLoaded(note);
+        Restaurant Restaurant = RESTAURANT_SERVICE_DATA.get(restaurantId);
+        callback.onLoaded(Restaurant);
     }
 
     @Override

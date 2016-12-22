@@ -90,7 +90,7 @@ class RestaurantsActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     }
 
     private fun initFragment(restauratFragment: Fragment) {
-        // Add the NotesFragment to the layout
+        // Add the RestaurantsFragment to the layout
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.add(R.id.contentFrame, restauratFragment)

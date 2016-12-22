@@ -20,9 +20,9 @@ class RestaurantAdapter(restaurants: List<Restaurant>, private val mItemListener
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
-        val noteView = inflater.inflate(R.layout.item_restaurant, parent, false)
+        val RestaurantView = inflater.inflate(R.layout.item_restaurant, parent, false)
 
-        return ViewHolder(noteView, mItemListener)
+        return ViewHolder(RestaurantView, mItemListener)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
@@ -63,8 +63,8 @@ class RestaurantAdapter(restaurants: List<Restaurant>, private val mItemListener
 
         override fun onClick(v: View) {
             val position = adapterPosition
-            val note = getItem(position)
-            mItemListener.onRestaurantClick(note)
+            val Restaurant = getItem(position)
+            mItemListener.onRestaurantClick(Restaurant)
 
         }
     }

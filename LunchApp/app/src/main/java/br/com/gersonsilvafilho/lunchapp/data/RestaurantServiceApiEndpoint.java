@@ -26,21 +26,21 @@ public final class RestaurantServiceApiEndpoint {
 
     static {
         DATA = new ArrayMap(2);
-        addNote("Restaurant1", "Good Price", null);
-        addNote("Restaurant2", "Good food", null);
-        addNote("Restaurant3", "Really close", null);
-        addNote("Restaurant4", "Good mood", null);
+        addRestaurant("Restaurant1", "Good Price", null);
+        addRestaurant("Restaurant2", "Good food", null);
+        addRestaurant("Restaurant3", "Really close", null);
+        addRestaurant("Restaurant4", "Good mood", null);
     }
 
     private final static ArrayMap<String, Restaurant> DATA;
 
-    private static void addNote(String title, String description, String imageUrl) {
+    private static void addRestaurant(String title, String description, String imageUrl) {
         Restaurant newRestaurant = new Restaurant(title, description, imageUrl);
         DATA.put(newRestaurant.getId(), newRestaurant);
     }
 
     /**
-     * @return the Notes to show when starting the app.
+     * @return the Restaurants to show when starting the app.
      */
     public static ArrayMap<String, Restaurant> loadPersistedRestaurants() {
         return DATA;
