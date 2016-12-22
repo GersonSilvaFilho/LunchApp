@@ -18,7 +18,6 @@ package br.com.gersonsilvafilho.lunchapp.restaurantDetail
 
 import br.com.gersonsilvafilho.lunchapp.data.Restaurant
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepository
-
 import com.google.common.base.Preconditions.checkNotNull
 
 /**
@@ -44,14 +43,17 @@ class RestaurantDetailPresenter(RestaurantsRepository: RestaurantRepository,
         }
 
         mRestaurantsDetailView.setProgressIndicator(true)
-        mRestaurantsRepository.getRestaurant(RestaurantId) { Restaurant ->
+        mRestaurantsRepository.getRestaurant(RestaurantId, object : RestaurantRepository.GetRestaurantCallback {
+            override fun onRestaurantsLoaded(Restaurant: Restaurant?) {
             mRestaurantsDetailView.setProgressIndicator(false)
             if (null == Restaurant) {
                 mRestaurantsDetailView.showMissingRestaurant()
             } else {
                 showRestaurant(Restaurant)
             }
-        }
+            }
+        })
+
     }
 
     private fun showRestaurant(Restaurant: Restaurant) {

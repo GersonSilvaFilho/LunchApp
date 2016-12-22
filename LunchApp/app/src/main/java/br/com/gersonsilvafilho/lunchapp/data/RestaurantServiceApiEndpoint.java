@@ -22,10 +22,10 @@ import android.support.v4.util.ArrayMap;
  * This is the endpoint for your data source. Typically, it would be a SQLite db and/or a server
  * API. In this example, we fake this by creating the data on the fly.
  */
-public final class RestaurantServiceApiEndpoint {
+public class RestaurantServiceApiEndpoint {
 
     static {
-        DATA = new ArrayMap(2);
+        DATA = new ArrayMap(4);
         addRestaurant("Restaurant1", "Good Price", null);
         addRestaurant("Restaurant2", "Good food", null);
         addRestaurant("Restaurant3", "Really close", null);

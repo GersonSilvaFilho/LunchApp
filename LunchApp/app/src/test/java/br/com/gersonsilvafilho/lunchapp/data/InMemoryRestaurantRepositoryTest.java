@@ -50,14 +50,16 @@ public class InMemoryRestaurantRepositoryTest {
 
     private InMemoryRestaurantRepository mRestaurantsRepository;
 
-    @Mock
-    private RestaurantServiceApiImpl mServiceApi;
+
 
     @Mock
     private RestaurantRepository.GetRestaurantCallback mGetRestaurantCallback;
 
     @Mock
     private RestaurantRepository.LoadRestaurantsCallback mLoadRestaurantsCallback;
+
+    @Mock
+    private RestaurantServiceApiImpl mServiceApi;
 
     /**
      * {@link ArgumentCaptor} is a powerful Mockito API to capture argument values and use them to
@@ -117,7 +119,7 @@ public class InMemoryRestaurantRepositoryTest {
         mRestaurantsRepository.saveRestaurant(newRestaurant);
 
         // Then the notes cache is cleared
-        assertThat(mRestaurantsRepository.mCachedRestaurants, is(nullValue()));
+        assertThat(mRestaurantsRepository.getMCachedRestaurants(), is(nullValue()));
     }
 
     @Test

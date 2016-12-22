@@ -14,25 +14,19 @@
  * limitations under the License.
  */
 
-package br.com.gersonsilvafilho.lunchapp.data;
+package br.com.gersonsilvafilho.lunchapp.data
 
-import android.support.annotation.NonNull;
+import com.google.common.base.Preconditions.checkNotNull
 
-import static com.google.common.base.Preconditions.checkNotNull;
+object RestaurantRepositories {
 
-public class RestaurantRepositories {
+    private var repository: RestaurantRepository? = null
 
-    private RestaurantRepositories() {
-        // no instance
-    }
-
-    private static RestaurantRepository repository = null;
-
-    public synchronized static RestaurantRepository getInMemoryRepoInstance(@NonNull RestaurantServiceApi restaurantServiceApi) {
-        checkNotNull(restaurantServiceApi);
+    @Synchronized fun getInMemoryRepoInstance(restaurantServiceApi: RestaurantServiceApi): RestaurantRepository? {
+        checkNotNull(restaurantServiceApi)
         if (null == repository) {
-            repository = new InMemoryRestaurantRepository(restaurantServiceApi);
+            repository = InMemoryRestaurantRepository(restaurantServiceApi)
         }
-        return repository;
+        return repository
     }
-}
+}// no instance

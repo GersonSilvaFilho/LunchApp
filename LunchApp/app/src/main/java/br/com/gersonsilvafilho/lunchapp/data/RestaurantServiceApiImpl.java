@@ -46,7 +46,6 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi {
 
     @Override
     public void getRestaurant(final String restaurantId, final RestaurantsServiceCallback callback) {
-        //TODO: Add network latency here too.
         Restaurant Restaurant = RESTAURANT_SERVICE_DATA.get(restaurantId);
         callback.onLoaded(Restaurant);
     }

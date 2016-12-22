@@ -54,8 +54,6 @@ class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurant
                 mRestaurantView.setProgressIndicator(false)
                 mRestaurantView.showRestaurants(restaurants)
             }
-
-
         })
     }
 

@@ -14,33 +14,29 @@
  * limitations under the License.
  */
 
-package br.com.gersonsilvafilho.lunchapp.data;
-
-import android.support.annotation.NonNull;
-
-import java.util.List;
+package br.com.gersonsilvafilho.lunchapp.data
 
 /**
  * Main entry point for accessing Restaurants data.
  */
-public interface RestaurantRepository {
+interface RestaurantRepository {
 
     interface LoadRestaurantsCallback {
 
-        void onRestaurantsLoaded(List<Restaurant> Restaurants);
+        fun onRestaurantsLoaded(Restaurants: List<Restaurant>)
     }
 
     interface GetRestaurantCallback {
 
-        void onRestaurantsLoaded(Restaurant Restaurant);
+        fun onRestaurantsLoaded(Restaurant: Restaurant?)
     }
 
-    void getRestaurants(@NonNull LoadRestaurantsCallback callback);
+    fun getRestaurants(callback: LoadRestaurantsCallback)
 
-    void getRestaurant(@NonNull String RestaurantId, @NonNull GetRestaurantCallback callback);
+    fun getRestaurant(RestaurantId: String, callback: GetRestaurantCallback)
 
-    void saveRestaurant(@NonNull Restaurant Restaurant);
+    fun saveRestaurant(Restaurant: Restaurant)
 
-    void refreshData();
+    fun refreshData()
 
 }

@@ -18,6 +18,6 @@ object Injection {
 //    }
 
     fun provideRestaurantsRepository(): RestaurantRepository {
-        return RestaurantRepositories.getInMemoryRepoInstance(FakeRestaurantServiceApiImpl())
+        return RestaurantRepositories.getInMemoryRepoInstance(FakeRestaurantServiceApiImpl())!!
     }
 }

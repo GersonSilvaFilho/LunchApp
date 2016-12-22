@@ -17,6 +17,6 @@ import br.com.gersonsilvafilho.lunchapp.data.RestaurantServiceApiImpl
 //    }
 
     fun provideRestaurantsRepository(): RestaurantRepository {
-        return RestaurantRepositories.getInMemoryRepoInstance(RestaurantServiceApiImpl())
+        return RestaurantRepositories.getInMemoryRepoInstance(RestaurantServiceApiImpl())!!
     }
 }

@@ -99,6 +99,6 @@ class RestaurantsActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 
     @VisibleForTesting
     fun getCountingIdlingResource(): IdlingResource {
-        return EspressoIdlingResource.getIdlingResource()
+        return EspressoIdlingResource.idlingResource
     }
 }
