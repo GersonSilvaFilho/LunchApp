@@ -1,6 +1,7 @@
 package br.com.gersonsilvafilho.lunchapp
 
 
+import android.content.Context
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepositories
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepository
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantServiceApiImpl
@@ -16,7 +17,7 @@ import br.com.gersonsilvafilho.lunchapp.data.RestaurantServiceApiImpl
 //        return FakeImageFileImpl()
 //    }
 
-    fun provideRestaurantsRepository(): RestaurantRepository {
-        return RestaurantRepositories.getInMemoryRepoInstance(RestaurantServiceApiImpl())!!
+    fun provideRestaurantsRepository(context: Context): RestaurantRepository {
+        return RestaurantRepositories.getInMemoryRepoInstance(RestaurantServiceApiImpl(context))!!
     }
 }

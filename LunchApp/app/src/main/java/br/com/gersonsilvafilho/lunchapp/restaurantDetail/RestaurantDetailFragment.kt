@@ -40,7 +40,7 @@ class RestaurantDetailFragment : Fragment(), RestaurantDetailContract.View {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mActionsListener = RestaurantDetailPresenter(Injection.provideRestaurantsRepository(), this)
+        mActionsListener = RestaurantDetailPresenter(Injection.provideRestaurantsRepository(this.context), this)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
