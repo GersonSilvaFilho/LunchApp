@@ -16,15 +16,10 @@
 
 package br.com.gersonsilvafilho.lunchapp.data;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
 import android.util.Log;
 
@@ -32,35 +27,30 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.AutocompletePrediction;
-import com.google.android.gms.location.places.AutocompletePredictionBuffer;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceLikelihood;
+import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
- * Implementation of the Restaurants Service API that adds a latency simulating network.
+ * Implementation of the Restaurants Service API that calls near restaurants using GooglePlaceAPI
  */
 public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private static final int SERVICE_LATENCY_IN_MILLIS = 0;
     private static final ArrayMap<String, Restaurant> RESTAURANT_SERVICE_DATA =
             RestaurantServiceApiEndpoint.loadPersistedRestaurants();
 
     private GoogleApiClient mGoogleApiClient;
-    private static final int PERMISSION_REQUEST_CODE = 100;
     private String LOG_TAG = "RestaurantService";
 
 
     public RestaurantServiceApiImpl(Context context)
     {
+        //Create googleApiClientInstance
         mGoogleApiClient = new GoogleApiClient
                 .Builder(context)
                 .addApi(Places.GEO_DATA_API)
@@ -70,93 +60,76 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
                 .build();
 
         mGoogleApiClient.connect();
-
-        if (mGoogleApiClient.isConnected()) {
-            if (ContextCompat.checkSelfPermission(context,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions((Activity) context,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        PERMISSION_REQUEST_CODE);
-            } else {
-                callPlaceDetectionApi();
-            }
-
-        }
-    }
-
-    private void callPlaceDetectionApi() throws SecurityException {
-
     }
 
     @Override
     public void getAllRestaurant(final RestaurantsServiceCallback callback) {
 
-        LatLngBounds bounds = new LatLngBounds( new LatLng( 39.906374, -105.122337 ), new LatLng( 39.949552, -105.068779 ) );
+        final Collection<Integer> filterTypes = new ArrayList<Integer>();
+        filterTypes.add(Place.TYPE_RESTAURANT);
+        filterTypes.add(Place.TYPE_CAFE);
+        filterTypes.add(Place.TYPE_ESTABLISHMENT);
+        filterTypes.add(Place.TYPE_BAKERY);
+        filterTypes.add(Place.TYPE_BAR);
 
-        AutocompleteFilter autocompleteFilter=new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_RESTAURANT).build();
-        PendingResult<AutocompletePredictionBuffer> pendingResult=Places
-                .GeoDataApi
-                .getAutocompletePredictions(mGoogleApiClient,null, bounds, null);
+        PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi
+                .getCurrentPlace(mGoogleApiClient, null);
 
-        pendingResult.setResultCallback(new ResultCallback<AutocompletePredictionBuffer>() {
+        result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
             @Override
-            public void onResult(@NonNull AutocompletePredictionBuffer autocompletePredictions) {
-                Status status=autocompletePredictions.getStatus();
-//                Iterator<AutocompletePrediction> iterator=autocompletePredictions.iterator();
-                List<Restaurant> restaurants = new ArrayList<>();
-//                while (iterator.hasNext()){
-//                    AutocompletePrediction autocompletePrediction=iterator.next();
-//                    // do something
-//
-//                }
+            public void onResult(PlaceLikelihoodBuffer likelyPlaces) {
+                 List<Restaurant> restaurants = new ArrayList<>();
 
-                if( autocompletePredictions.getStatus().isSuccess() ) {
-                    for( AutocompletePrediction prediction : autocompletePredictions ) {
-                        //Add as a new item to avoid IllegalArgumentsException when buffer is released
-                        Restaurant restaurant = new Restaurant(prediction.getPrimaryText(null).toString()
-                                ,prediction.getFullText(null).toString());
+                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
+                    if(placeLikelihood.getPlace().getPlaceTypes().contains(Place.TYPE_RESTAURANT) ||
+                            placeLikelihood.getPlace().getPlaceTypes().contains(Place.TYPE_CAFE) ||
+                            placeLikelihood.getPlace().getPlaceTypes().contains(Place.TYPE_BAKERY) ||
+                            placeLikelihood.getPlace().getPlaceTypes().contains(Place.TYPE_BAR))
+                    {
+                        Log.i(LOG_TAG, String.format("Place '%s' with " +
+                                        "likelihood: %g",
+                                placeLikelihood.getPlace().getName(),
+                                placeLikelihood.getLikelihood()));
+                        Restaurant restaurant = new Restaurant(placeLikelihood.getPlace().getName().toString()
+                                , placeLikelihood.getPlace().getPhoneNumber().toString());
                         restaurants.add(restaurant);
                     }
                 }
+
                 callback.onLoaded(restaurants);
+                //release object
+                likelyPlaces.release();
             }
-        }, 20, TimeUnit.SECONDS);
-        //rectangleLyon is LatLngBounds, to remove filters put autocompletefilter as null
-        // Second parameter(as String "delhi") is your search query
+        });
 
-
-
-
-//        result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
-//            @Override
-//            public void onResult(PlaceLikelihoodBuffer likelyPlaces) {
-//                 List<Restaurant> restaurants = new ArrayList<>();
+//        AutocompleteFilter autocompleteFilter=new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_RESTAURANT).build();
 //
-//                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-//                    Log.i(LOG_TAG, String.format("Place '%s' with " +
-//                                    "likelihood: %g",
-//                            placeLikelihood.getPlace().getName(),
-//                            placeLikelihood.getLikelihood()));
-//                    Restaurant restaurant = new Restaurant(placeLikelihood.getPlace().getName().toString()
-//                                                          ,placeLikelihood.getPlace().getAddress().toString());
-//                    restaurants.add(restaurant);
+//
+//        Places.GeoDataApi
+//                .getAutocompletePredictions(mGoogleApiClient,"Restaurante", bounds, autocompleteFilter).setResultCallback(new ResultCallback<AutocompletePredictionBuffer>() {
+//            @Override
+//            public void onResult(@NonNull AutocompletePredictionBuffer autocompletePredictions) {
+//                Status status=autocompletePredictions.getStatus();
+////                Iterator<AutocompletePrediction> iterator=autocompletePredictions.iterator();
+//                List<Restaurant> restaurants = new ArrayList<>();
+////                while (iterator.hasNext()){
+////                    AutocompletePrediction autocompletePrediction=iterator.next();
+////                    // do something
+////
+////                }
+//
+//                if( autocompletePredictions.getStatus().isSuccess() ) {
+//                    for( AutocompletePrediction prediction : autocompletePredictions ) {
+//                        //Add as a new item to avoid IllegalArgumentsException when buffer is released
+//                        Restaurant restaurant = new Restaurant(prediction.getPrimaryText(null).toString()
+//                                ,prediction.getFullText(null).toString());
+//                        restaurants.add(restaurant);
+//                    }
 //                }
-//
 //                callback.onLoaded(restaurants);
-//                likelyPlaces.release();
 //            }
-//        });
+//        }, 20, TimeUnit.SECONDS);
 
-//        // Simulate network by delaying the execution.
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                List<Restaurant> restaurants = new ArrayList<>(RESTAURANT_SERVICE_DATA.values());
-//                callback.onLoaded(restaurants);
-//            }
-//        }, SERVICE_LATENCY_IN_MILLIS);
     }
 
     @Override
