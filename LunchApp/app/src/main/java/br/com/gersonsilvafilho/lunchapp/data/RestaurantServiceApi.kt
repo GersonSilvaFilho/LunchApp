@@ -16,6 +16,8 @@
 
 package br.com.gersonsilvafilho.lunchapp.data
 
+import android.graphics.Bitmap
+
 /**
  * Defines an interface to the service API that is used by this application. All data request should
  * be piped through this interface.
@@ -23,13 +25,18 @@ package br.com.gersonsilvafilho.lunchapp.data
 interface RestaurantServiceApi {
 
     interface RestaurantsServiceCallback<T> {
-
         fun onLoaded(Restaurants: T)
+    }
+
+    interface RestaurantsImageUrlCallback<T> {
+        fun onLoaded(Bitmap: T)
     }
 
     fun getAllRestaurant(callback: RestaurantsServiceCallback<List<Restaurant>>)
 
     fun getRestaurant(RestaurantId: String, callback: RestaurantsServiceCallback<Restaurant>)
+
+    fun getRestaurantImageBitmap(RestaurantId: String, imgHeight: Int, imageWidth: Int, callback: RestaurantsImageUrlCallback<Bitmap>)
 
     fun saveRestaurant(restaurant: Restaurant)
 }

@@ -1,5 +1,6 @@
 package br.com.gersonsilvafilho.lunchapp.data
 
+import android.graphics.Bitmap
 import android.support.annotation.VisibleForTesting
 import com.google.common.base.Preconditions.checkNotNull
 import com.google.common.collect.ImmutableList
@@ -56,6 +57,18 @@ class InMemoryRestaurantRepository(restaurantServiceApi: RestaurantServiceApi) :
 
     override fun refreshData() {
         mCachedRestaurants = null
+    }
+
+    override fun getRestaurantImageBitmap(RestaurantId: String, imgHeight: Int, imageWidth: Int, callback: RestaurantRepository.GetRestaurantImageCallback<Bitmap>) {
+        checkNotNull(String)
+        checkNotNull(callback)
+        // Load Restaurants matching the id always directly from the API.
+        mRestaurantServiceApi.getRestaurantImageBitmap(RestaurantId, imgHeight, imageWidth, object : RestaurantServiceApi.RestaurantsImageUrlCallback<Bitmap>
+        {
+            override fun onLoaded(bitmap: Bitmap) {
+                callback.onRestaurantImageLoaded(bitmap)
+            }
+        });
     }
 
 }

@@ -16,6 +16,7 @@
 
 package br.com.gersonsilvafilho.lunchapp.restaurantDetail
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -35,6 +36,7 @@ import kotlinx.android.synthetic.main.fragment_detail.*
  * Main UI for the Restaurant detail screen.
  */
 class RestaurantDetailFragment : Fragment(), RestaurantDetailContract.View {
+
 
     private var mActionsListener: RestaurantDetailContract.UserActionsListener? = null
 
@@ -122,5 +124,9 @@ class RestaurantDetailFragment : Fragment(), RestaurantDetailContract.View {
             fragment.arguments = arguments
             return fragment
         }
+    }
+
+    override fun showImageBitmap(bitmap: Bitmap) {
+        restaurant_detail_image.setImageBitmap(bitmap)
     }
 }
