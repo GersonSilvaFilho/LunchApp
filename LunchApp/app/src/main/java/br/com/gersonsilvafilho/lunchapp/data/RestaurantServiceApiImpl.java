@@ -28,6 +28,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
 import com.google.android.gms.location.places.Places;
@@ -90,7 +91,7 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
                                         "likelihood: %g",
                                 placeLikelihood.getPlace().getName(),
                                 placeLikelihood.getLikelihood()));
-                        Restaurant restaurant = new Restaurant(placeLikelihood.getPlace().getName().toString()
+                        Restaurant restaurant = new Restaurant(placeLikelihood.getPlace().getId(), placeLikelihood.getPlace().getName().toString()
                                 , placeLikelihood.getPlace().getPhoneNumber().toString());
                         restaurants.add(restaurant);
                     }
@@ -134,8 +135,20 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
 
     @Override
     public void getRestaurant(final String restaurantId, final RestaurantsServiceCallback callback) {
-        Restaurant Restaurant = RESTAURANT_SERVICE_DATA.get(restaurantId);
-        callback.onLoaded(Restaurant);
+        PendingResult<PlaceBuffer> result = Places.GeoDataApi.getPlaceById(mGoogleApiClient, restaurantId);
+        result.setResultCallback(new ResultCallback<PlaceBuffer>() {
+            @Override
+            public void onResult(@NonNull PlaceBuffer places) {
+                if( places.getStatus().isSuccess() )
+                {
+                    for( Place place : places )
+                    {
+                        Restaurant restaurant = new Restaurant(place.getId(), place.getName().toString(), place.getAddress().toString());
+                        callback.onLoaded(restaurant);
+                    }
+                }
+            }
+        });
     }
 
     @Override

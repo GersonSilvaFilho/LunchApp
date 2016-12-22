@@ -26,6 +26,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -43,10 +44,10 @@ public class InMemoryRestaurantRepositoryTest {
     private final static String RESTAURANT_TITLE = "title";
 
     private static List<Restaurant> RESTAURANTS = Lists.newArrayList(
-            new Restaurant("Restaurant1", "Description1"),
-            new Restaurant("Restaurant2", "Description2"),
-            new Restaurant("Restaurant3", "Description3"),
-            new Restaurant("Restaurant4", "Description4"));
+            new Restaurant(UUID.randomUUID().toString(), "Restaurant1", "Description1"),
+            new Restaurant(UUID.randomUUID().toString(), "Restaurant2", "Description2"),
+            new Restaurant(UUID.randomUUID().toString(), "Restaurant3", "Description3"),
+            new Restaurant(UUID.randomUUID().toString(), "Restaurant4", "Description4"));
 
     private InMemoryRestaurantRepository mRestaurantsRepository;
 
@@ -113,7 +114,7 @@ public class InMemoryRestaurantRepositoryTest {
     @Test
     public void saveRestaurant_savesRestaurantToServiceAPIAndInvalidatesCache() {
         // Given a stub note with title and description
-        Restaurant newRestaurant = new Restaurant(RESTAURANT_TITLE, "Some Restaurant Description");
+        Restaurant newRestaurant = new Restaurant(UUID.randomUUID().toString(), RESTAURANT_TITLE, "Some Restaurant Description");
 
         // When a note is saved to the notes repository
         mRestaurantsRepository.saveRestaurant(newRestaurant);

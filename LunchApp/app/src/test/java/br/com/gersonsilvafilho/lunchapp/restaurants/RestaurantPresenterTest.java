@@ -26,6 +26,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
+import java.util.UUID;
 
 import br.com.gersonsilvafilho.lunchapp.data.Restaurant;
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepository;
@@ -37,10 +38,10 @@ import static org.mockito.Mockito.verify;
 public class RestaurantPresenterTest {
 
     private static List<Restaurant> RESTAURANTS = Lists.newArrayList(
-            new Restaurant("Restaurant1", "Description1"),
-            new Restaurant("Restaurant2", "Description2"),
-            new Restaurant("Restaurant3", "Description3"),
-            new Restaurant("Restaurant4", "Description4"));
+            new Restaurant(UUID.randomUUID().toString(), "Restaurant1", "Description1"),
+            new Restaurant(UUID.randomUUID().toString(), "Restaurant2", "Description2"),
+            new Restaurant(UUID.randomUUID().toString(), "Restaurant3", "Description3"),
+            new Restaurant(UUID.randomUUID().toString(), "Restaurant4", "Description4"));
 
 
     @Mock
@@ -86,7 +87,7 @@ public class RestaurantPresenterTest {
     @Test
     public void clickOnRestaurant_ShowsDetailUi() {
         // Given a stubbed note
-        Restaurant requestedNote = new Restaurant("Details Requested", "For this note");
+        Restaurant requestedNote = new Restaurant(UUID.randomUUID().toString(), "Details Requested", "For this note");
 
         // When open note details is requested
         mNotesPresenter.openRestaurantDetails(requestedNote);

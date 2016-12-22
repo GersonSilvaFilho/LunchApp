@@ -23,6 +23,8 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.UUID;
+
 import br.com.gersonsilvafilho.lunchapp.data.Restaurant;
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepository;
 
@@ -68,7 +70,7 @@ public class RestaurantDetailPresenterTest {
     @Test
     public void getRestaurantFromRepositoryAndLoadIntoView() {
         // Given an initialized RestaurantDetailPresenter with stubbed note
-        Restaurant note = new Restaurant(TITLE_TEST, DESCRIPTION_TEST);
+        Restaurant note = new Restaurant(UUID.randomUUID().toString(), TITLE_TEST, DESCRIPTION_TEST);
 
         // When notes presenter is asked to open a note
         mRestaurantsDetailsPresenter.openRestaurant(note.getId());
