@@ -71,15 +71,15 @@ class RestaurantsActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 
         var fragment: Fragment? = null
         if (id == R.id.nav_home) {
-            toolbar.setTitle("Today Restaurant")
+            toolbar.setTitle(getString(R.string.nav_today_text))
             fragment = RestaurantsFragment.newInstance(Date())
         } else if (id == R.id.nav_yesterday) {
-            toolbar.setTitle("Yesterday Result")
+            toolbar.setTitle(getString(R.string.nav_yesterday_text))
             val cal = Calendar.getInstance()
             cal.add(Calendar.DATE, -1)
             fragment = RestaurantsFragment.newInstance(cal.time)
         } else if (id == R.id.nav_tomorrow) {
-            toolbar.setTitle("Tomorrow Voting")
+            toolbar.setTitle(getString(R.string.nav_tomorrow_text))
             val cal = Calendar.getInstance()
             cal.add(Calendar.DATE, 1)
             fragment = RestaurantsFragment.newInstance(cal.time)

@@ -12,6 +12,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -97,6 +98,8 @@ dependencies {
 
     //Shared Preferences helper
     compile "com.chibatching:kotpref:$rootProject.ext.kotPreferences"
+
+    compile 'com.android.support:multidex:+'
 }
 
 /*

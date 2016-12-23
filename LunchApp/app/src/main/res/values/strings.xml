@@ -28,4 +28,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="nav_yesterday_text">Yesterday Result</string>
+    <string name="nav_tomorrow_text">Tomorrow Voting</string>
+    <string name="nav_today_text">Today Restaurant</string>
 </resources>
