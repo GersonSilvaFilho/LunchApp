@@ -28,6 +28,6 @@ Android App written in Kotlin that uses MVP pattern.
   - Used Retrofit 2.0 to consume Votes web api
   
 ## Could do better
-  - I'm starting to study RxJava and Dagger for DI, but didn't have time to use in this project
+  - I'm starting to study RxJava and Dagger for DI, but didn't have time to use in this project
   - Could have more testing =(
-  - Didn't implemented one time per week restaurant
+  - Didn't implemented one time per week restaurant
