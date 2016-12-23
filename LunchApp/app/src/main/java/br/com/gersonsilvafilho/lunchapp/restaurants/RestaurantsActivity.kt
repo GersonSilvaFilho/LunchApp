@@ -19,6 +19,8 @@ import kotlinx.android.synthetic.main.activity_restaurants.*
 import kotlinx.android.synthetic.main.app_bar_restaurants.*
 import java.util.*
 
+
+
 class RestaurantsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {

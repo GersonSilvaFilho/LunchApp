@@ -4,12 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import br.com.gersonsilvafilho.lunchapp.R
+import br.com.gersonsilvafilho.lunchapp.notification.AlarmManagerBroadcastReceiver
 import br.com.gersonsilvafilho.lunchapp.restaurants.RestaurantsActivity
 import br.com.gersonsilvafilho.lunchapp.restaurants.UsernameContract
 import br.com.gersonsilvafilho.lunchapp.util.UserInfo
 import kotlinx.android.synthetic.main.activity_username.*
-
-
 
 class UsernameActivity : AppCompatActivity(), UsernameContract.View {
 
@@ -34,6 +33,9 @@ class UsernameActivity : AppCompatActivity(), UsernameContract.View {
         //Set enter button click
         email_sign_in_button.setOnClickListener {
 
+            //Set timer to notify every day at 13 PM
+            setTimer()
+
             //Add the username to shared prefs
             UserInfo.username = username_textview.text.toString()
 
@@ -55,5 +57,11 @@ class UsernameActivity : AppCompatActivity(), UsernameContract.View {
 
     companion object {
         val EXTRA_IS_NAME_CHANGE = "Restaurant_ID"
+    }
+
+    private fun setTimer()
+    {
+        var alarm = AlarmManagerBroadcastReceiver()
+        alarm.setTimer(this)
     }
 }

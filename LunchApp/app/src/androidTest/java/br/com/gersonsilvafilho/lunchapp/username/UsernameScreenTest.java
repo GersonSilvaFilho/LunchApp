@@ -81,24 +81,4 @@ public class UsernameScreenTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(expectedTomorrowToolbarText)));
     }
-
-    @Test
-    public void clickOnYesterdayNav_ShowsYesterdayTab() {
-        // Open Drawer to click on navigation.
-        onView(withId(R.id.drawer_layout))
-                .check(matches(isClosed(Gravity.LEFT))) // Left Drawer should be closed.
-                .perform(open()); // Open Drawer
-
-        // Start tomorrow view
-        onView(withId(R.id.nav_view))
-                .perform(navigateTo(R.id.nav_yesterday));
-
-        // Check that statistics Activity was opened.
-        String expectedYesterdayToolbarText = InstrumentationRegistry.getTargetContext()
-                .getString(R.string.nav_yesterday_text);
-
-
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(expectedYesterdayToolbarText)));
-    }
 }
