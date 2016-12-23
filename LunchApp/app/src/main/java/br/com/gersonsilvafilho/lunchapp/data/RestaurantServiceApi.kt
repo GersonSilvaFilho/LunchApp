@@ -17,6 +17,7 @@
 package br.com.gersonsilvafilho.lunchapp.data
 
 import android.graphics.Bitmap
+import java.util.*
 
 /**
  * Defines an interface to the service API that is used by this application. All data request should
@@ -28,7 +29,7 @@ interface RestaurantServiceApi {
         fun onLoaded(Restaurants: T)
     }
 
-    fun getAllRestaurant(callback: RestaurantsServiceCallback<List<Restaurant>>)
+    fun getAllRestaurant(date: Date, callback: RestaurantsServiceCallback<List<Restaurant>>)
 
     fun getRestaurant(RestaurantId: String, callback: RestaurantsServiceCallback<Restaurant>)
 

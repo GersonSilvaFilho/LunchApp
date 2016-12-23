@@ -1,4 +1,4 @@
-package br.com.gersonsilvafilho.lunchapp.Username
+package br.com.gersonsilvafilho.lunchapp.username
 
 
 import br.com.gersonsilvafilho.lunchapp.restaurants.UsernameContract

@@ -67,7 +67,7 @@ class RestaurantsFragment(date : Date) : Fragment(), RestaurantContract.View {
                 ContextCompat.getColor(activity, R.color.colorPrimary),
                 ContextCompat.getColor(activity, R.color.colorAccent),
                 ContextCompat.getColor(activity, R.color.colorPrimaryDark))
-        refresh_layout.setOnRefreshListener { mActionsListener?.loadRestaurants(true) }
+        refresh_layout.setOnRefreshListener { mActionsListener?.loadRestaurants(date!!, true) }
     }
 
     companion object {
@@ -103,7 +103,7 @@ class RestaurantsFragment(date : Date) : Fragment(), RestaurantContract.View {
 
     override fun onResume() {
         super.onResume()
-        mActionsListener?.loadRestaurants(true)
+        mActionsListener?.loadRestaurants(date!!, true)
         showSnackbarText("Long click to add a Vote")
     }
 

@@ -17,6 +17,7 @@
 package br.com.gersonsilvafilho.lunchapp.data
 
 import android.graphics.Bitmap
+import java.util.*
 
 /**
  * Main entry point for accessing Restaurants data.
@@ -41,7 +42,7 @@ interface RestaurantRepository {
         fun onRestaurantVote(response: Map<String,String>)
     }
 
-    fun getRestaurants(callback: LoadRestaurantsCallback)
+    fun getRestaurants(date: Date, callback: LoadRestaurantsCallback)
 
     fun getRestaurant(RestaurantId: String, callback: GetRestaurantCallback)
 
@@ -52,4 +53,5 @@ interface RestaurantRepository {
     fun getRestaurantImageBitmap(RestaurantId: String, imgHeight: Int, imageWidth: Int, callback: GetRestaurantImageCallback)
 
     fun sendRestaurantVote(RestaurantId: String, UserId: String, callback: SendRestaurantVoteCallback)
+
 }

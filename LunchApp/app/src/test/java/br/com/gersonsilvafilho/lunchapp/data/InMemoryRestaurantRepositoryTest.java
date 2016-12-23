@@ -25,6 +25,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,7 +52,7 @@ public class InMemoryRestaurantRepositoryTest {
 
     private InMemoryRestaurantRepository mRestaurantsRepository;
 
-
+    public static final Date DATE = new Date();
 
     @Mock
     private RestaurantRepository.GetRestaurantCallback mGetRestaurantCallback;
@@ -86,7 +87,7 @@ public class InMemoryRestaurantRepositoryTest {
         twoLoadCallsToRepository(mLoadRestaurantsCallback);
 
         // Then notes where only requested once from Service API
-        verify(mServiceApi).getAllRestaurant(any(RestaurantServiceApi.RestaurantsServiceCallback.class));
+        verify(mServiceApi).getAllRestaurant(eq(DATE), any(RestaurantServiceApi.RestaurantsServiceCallback.class));
     }
 
     @Test
@@ -96,19 +97,19 @@ public class InMemoryRestaurantRepositoryTest {
 
         // When data refresh is requested
         mRestaurantsRepository.refreshData();
-        mRestaurantsRepository.getRestaurants(mLoadRestaurantsCallback); // Third call to API
+        mRestaurantsRepository.getRestaurants(DATE,mLoadRestaurantsCallback); // Third call to API
 
         // The notes where requested twice from the Service API (Caching on first and third call)
-        verify(mServiceApi, times(2)).getAllRestaurant(any(RestaurantServiceApi.RestaurantsServiceCallback.class));
+        verify(mServiceApi, times(2)).getAllRestaurant(eq(DATE),any(RestaurantServiceApi.RestaurantsServiceCallback.class));
     }
 
     @Test
     public void getRestaurants_requestsAllRestaurantsFromServiceApi() {
         // When notes are requested from the notes repository
-        mRestaurantsRepository.getRestaurants(mLoadRestaurantsCallback);
+        mRestaurantsRepository.getRestaurants(DATE,mLoadRestaurantsCallback);
 
         // Then notes are loaded from the service API
-        verify(mServiceApi).getAllRestaurant(any(RestaurantServiceApi.RestaurantsServiceCallback.class));
+        verify(mServiceApi).getAllRestaurant(eq(DATE),any(RestaurantServiceApi.RestaurantsServiceCallback.class));
     }
 
     @Test
@@ -137,15 +138,15 @@ public class InMemoryRestaurantRepositoryTest {
      */
     private void twoLoadCallsToRepository(RestaurantRepository.LoadRestaurantsCallback callback) {
         // When notes are requested from repository
-        mRestaurantsRepository.getRestaurants(callback); // First call to API
+        mRestaurantsRepository.getRestaurants(DATE,callback); // First call to API
 
         // Use the Mockito Captor to capture the callback
-        verify(mServiceApi).getAllRestaurant(mRestaurantsServiceCallbackCaptor.capture());
+        verify(mServiceApi).getAllRestaurant(eq(DATE),mRestaurantsServiceCallbackCaptor.capture());
 
         // Trigger callback so notes are cached
         mRestaurantsServiceCallbackCaptor.getValue().onLoaded(RESTAURANTS);
 
-        mRestaurantsRepository.getRestaurants(callback); // Second call to API
+        mRestaurantsRepository.getRestaurants(DATE,callback); // Second call to API
     }
 
 }

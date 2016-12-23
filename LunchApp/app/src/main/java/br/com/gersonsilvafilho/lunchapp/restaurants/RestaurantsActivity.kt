@@ -9,11 +9,12 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import br.com.gersonsilvafilho.lunchapp.R
-import br.com.gersonsilvafilho.lunchapp.Username.UsernameActivity
+import br.com.gersonsilvafilho.lunchapp.username.UsernameActivity
 import br.com.gersonsilvafilho.lunchapp.util.EspressoIdlingResource
+import br.com.gersonsilvafilho.lunchapp.util.UserInfo
 import kotlinx.android.synthetic.main.activity_restaurants.*
 import kotlinx.android.synthetic.main.app_bar_restaurants.*
 import java.util.*
@@ -31,6 +32,10 @@ class RestaurantsActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 
         nav_view.setNavigationItemSelectedListener(this)
 
+        val username_textview = nav_view.getHeaderView(0).findViewById(R.id.nav_username) as TextView
+
+        username_textview.setText(UserInfo.username)
+
         if (null == savedInstanceState) {
             initFragment(RestaurantsFragment.newInstance(Date()))
         }
@@ -42,12 +47,6 @@ class RestaurantsActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         } else {
             super.onBackPressed()
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_scrolling, menu)
-        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -38,7 +38,7 @@ class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurant
         mRestaurantView = checkNotNull<RestaurantContract.View>(restaurantView, "restaurantView cannot be null!")
     }
 
-    override fun loadRestaurants(forceUpdate: Boolean) {
+    override fun loadRestaurants(date: Date, forceUpdate: Boolean) {
         mRestaurantView.setProgressIndicator(true)
         if (forceUpdate) {
             mRestaurantRepository.refreshData()
@@ -49,7 +49,7 @@ class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurant
         EspressoIdlingResource.increment() // App is busy until further notice
 
 
-        mRestaurantRepository.getRestaurants(object : RestaurantRepository.LoadRestaurantsCallback {
+        mRestaurantRepository.getRestaurants(date, object : RestaurantRepository.LoadRestaurantsCallback {
             override fun onRestaurantsLoaded(restaurants: List<Restaurant>) {
                 EspressoIdlingResource.decrement() // Set app as idle.
                 mRestaurantView.setProgressIndicator(false)
