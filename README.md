@@ -30,5 +30,5 @@ Android App written in Kotlin that uses MVP pattern.
 ## Could do better
   - I'm starting to study RxJava and Dagger for DI, but didn't have time to use in this project
   - Could have more testing =(
-  - Didn't implemented one time per week restaurant
+  - Didn't implement one time per week restaurant
   - Sorry about the UI, i'm terrible designer
