@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.support.annotation.VisibleForTesting
 import com.google.common.base.Preconditions.checkNotNull
 import com.google.common.collect.ImmutableList
+import java.util.*
 
 /**
  * Concrete implementation to load Restaurants from the a data source.
@@ -23,11 +24,11 @@ class InMemoryRestaurantRepository(restaurantServiceApi: RestaurantServiceApi) :
         mRestaurantServiceApi = checkNotNull(restaurantServiceApi)
     }
 
-    override fun getRestaurants(callback: RestaurantRepository.LoadRestaurantsCallback) {
+    override fun getRestaurants(date: Date, callback: RestaurantRepository.LoadRestaurantsCallback) {
         checkNotNull(callback)
         // Load from API only if needed.
         if (mCachedRestaurants == null) {
-            mRestaurantServiceApi.getAllRestaurant(object : RestaurantServiceApi.RestaurantsServiceCallback<List<Restaurant>> {
+            mRestaurantServiceApi.getAllRestaurant(date, object : RestaurantServiceApi.RestaurantsServiceCallback<List<Restaurant>> {
                 override fun onLoaded(restaurants: List<Restaurant>) {
                     mCachedRestaurants = ImmutableList.copyOf(restaurants)
                     callback.onRestaurantsLoaded(mCachedRestaurants!!)

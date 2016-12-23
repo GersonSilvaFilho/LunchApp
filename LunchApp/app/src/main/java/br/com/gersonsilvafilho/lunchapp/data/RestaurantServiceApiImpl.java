@@ -55,11 +55,12 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
 
         mGoogleApiClient.connect();
 
+        //Create vote service Instance
         votesService = new VotesService();
     }
 
     @Override
-    public void getAllRestaurant(final RestaurantsServiceCallback callback) {
+    public void getAllRestaurant(final Date date, final RestaurantsServiceCallback callback) {
 
         final Collection<Integer> filterTypes = new ArrayList<Integer>();
         filterTypes.add(Place.TYPE_RESTAURANT);
@@ -93,7 +94,7 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
                 }
 
                 //Get votes from the other API
-                votesService.GetVotesFromDay(new Date(), new Callback<Map<String,List<String>>>() {
+                votesService.GetVotesFromDay(date, new Callback<Map<String,List<String>>>() {
                             @Override
                             public void onResponse(Response<Map<String,List<String>>> response, Retrofit retrofit) {
                                 if(response.body() == null )

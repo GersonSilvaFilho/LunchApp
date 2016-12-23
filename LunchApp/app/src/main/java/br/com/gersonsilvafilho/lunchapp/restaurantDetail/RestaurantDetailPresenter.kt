@@ -50,7 +50,7 @@ class RestaurantDetailPresenter(RestaurantsRepository: RestaurantRepository,
         mRestaurantsDetailView.setProgressIndicator(true)
         mRestaurantsRepository.getRestaurant(RestaurantId, object : RestaurantRepository.GetRestaurantCallback {
             override fun onRestaurantsLoaded(Restaurant: Restaurant?) {
-                mRestaurant = Restaurant!!
+                mRestaurant = Restaurant
                 mRestaurantsDetailView.setProgressIndicator(false)
                 if (null == Restaurant) {
                     mRestaurantsDetailView.showMissingRestaurant()

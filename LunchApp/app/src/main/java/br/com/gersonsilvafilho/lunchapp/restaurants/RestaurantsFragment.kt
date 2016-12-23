@@ -24,21 +24,27 @@ import java.util.*
  * Use the [RestaurantsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class RestaurantsFragment : Fragment(), RestaurantContract.View {
+class RestaurantsFragment(date : Date) : Fragment(), RestaurantContract.View {
 
 
     private var mActionsListener: RestaurantContract.UserActionsListener? = null
 
     private var mListAdapter: RestaurantAdapter? = null
 
-    fun RestaurantsFragment() {
-        // Requires empty public constructor
+    private var date : Date? = null
+
+    init {
+        this.date = date
     }
+
+    constructor(): this(Date()) {
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mListAdapter = RestaurantAdapter(ArrayList<Restaurant>(0), mItemListener)
-        mActionsListener = RestaurantPresenter(Injection.provideRestaurantsRepository(this.context), this)
+        mActionsListener = RestaurantPresenter(Injection.provideRestaurantsRepository(this.context), this, date!!)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -61,12 +67,12 @@ class RestaurantsFragment : Fragment(), RestaurantContract.View {
                 ContextCompat.getColor(activity, R.color.colorPrimary),
                 ContextCompat.getColor(activity, R.color.colorAccent),
                 ContextCompat.getColor(activity, R.color.colorPrimaryDark))
-        refresh_layout.setOnRefreshListener { mActionsListener?.loadRestaurants(true) }
+        refresh_layout.setOnRefreshListener { mActionsListener?.loadRestaurants(date!!, true) }
     }
 
     companion object {
-        fun newInstance(): RestaurantsFragment {
-            return RestaurantsFragment()
+        fun newInstance(date: Date): RestaurantsFragment {
+            return RestaurantsFragment(date)
         }
     }
 
@@ -97,7 +103,7 @@ class RestaurantsFragment : Fragment(), RestaurantContract.View {
 
     override fun onResume() {
         super.onResume()
-        mActionsListener?.loadRestaurants(true)
+        mActionsListener?.loadRestaurants(date!!, true)
         showSnackbarText("Long click to add a Vote")
     }
 

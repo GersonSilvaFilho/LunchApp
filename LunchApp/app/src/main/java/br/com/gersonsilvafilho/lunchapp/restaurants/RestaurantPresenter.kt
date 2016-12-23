@@ -21,13 +21,14 @@ import br.com.gersonsilvafilho.lunchapp.data.Restaurant
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepository
 import br.com.gersonsilvafilho.lunchapp.util.EspressoIdlingResource
 import com.google.common.base.Preconditions.checkNotNull
+import java.util.*
 
 
 /**
  * Listens to user actions from the UI ([RestaurantsFragment]), retrieves the data and updates the
  * UI as required.
  */
-class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurantView: RestaurantContract.View) : RestaurantContract.UserActionsListener {
+class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurantView: RestaurantContract.View, date : Date) : RestaurantContract.UserActionsListener {
 
     private val mRestaurantRepository: RestaurantRepository
     private val mRestaurantView: RestaurantContract.View
@@ -37,7 +38,7 @@ class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurant
         mRestaurantView = checkNotNull<RestaurantContract.View>(restaurantView, "restaurantView cannot be null!")
     }
 
-    override fun loadRestaurants(forceUpdate: Boolean) {
+    override fun loadRestaurants(date: Date, forceUpdate: Boolean) {
         mRestaurantView.setProgressIndicator(true)
         if (forceUpdate) {
             mRestaurantRepository.refreshData()
@@ -48,7 +49,7 @@ class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurant
         EspressoIdlingResource.increment() // App is busy until further notice
 
 
-        mRestaurantRepository.getRestaurants(object : RestaurantRepository.LoadRestaurantsCallback {
+        mRestaurantRepository.getRestaurants(date, object : RestaurantRepository.LoadRestaurantsCallback {
             override fun onRestaurantsLoaded(restaurants: List<Restaurant>) {
                 EspressoIdlingResource.decrement() // Set app as idle.
                 mRestaurantView.setProgressIndicator(false)

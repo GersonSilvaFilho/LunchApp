@@ -25,6 +25,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +33,7 @@ import br.com.gersonsilvafilho.lunchapp.data.Restaurant;
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepository;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 
 
@@ -43,6 +45,7 @@ public class RestaurantPresenterTest {
             new Restaurant(UUID.randomUUID().toString(), "Restaurant3", "Description3"),
             new Restaurant(UUID.randomUUID().toString(), "Restaurant4", "Description4"));
 
+    public static final Date DATE = new Date();
 
     @Mock
     private RestaurantRepository mRestaurantRepository;
@@ -66,17 +69,17 @@ public class RestaurantPresenterTest {
         MockitoAnnotations.initMocks(this);
 
         // Get a reference to the class under test
-        mNotesPresenter = new RestaurantPresenter(mRestaurantRepository, mRestaurantView);
+        mNotesPresenter = new RestaurantPresenter(mRestaurantRepository, mRestaurantView, new Date());
     }
 
     @Test
     public void loadRestaurantsFromRepositoryAndLoadIntoView() {
         // Given an initialized NotesPresenter with initialized notes
         // When loading of Notes is requested
-        mNotesPresenter.loadRestaurants(true);
+        mNotesPresenter.loadRestaurants(DATE,true);
 
         // Callback is captured and invoked with stubbed notes
-        verify(mRestaurantRepository).getRestaurants(mLoadRestaurantCallbackCaptor.capture());
+        verify(mRestaurantRepository).getRestaurants(eq(DATE), mLoadRestaurantCallbackCaptor.capture());
         mLoadRestaurantCallbackCaptor.getValue().onRestaurantsLoaded(RESTAURANTS);
 
         // Then progress indicator is hidden and notes are shown in UI
