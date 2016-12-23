@@ -44,7 +44,7 @@ import static org.hamcrest.core.AllOf.allOf;
 
 
 /**
- * Tests for the {@link DrawerLayout} layout component in {@link RestaurantsActivity} which manages
+ * Tests for the {@link DrawerLayout} layout component in {@link RestaurantActivity} which manages
  * navigation within the app.
  */
 @RunWith(AndroidJUnit4.class)
@@ -59,8 +59,8 @@ public class AppNavigationTest {
      * blocks of Junit tests.
      */
     @Rule
-    public ActivityTestRule<RestaurantsActivity> mActivityTestRule =
-            new ActivityTestRule<>(RestaurantsActivity.class);
+    public ActivityTestRule<RestaurantActivity> mActivityTestRule =
+            new ActivityTestRule<>(RestaurantActivity.class);
 
     @Test
     public void clickOnTomorrowNav_ShowsTomorrowTab() {

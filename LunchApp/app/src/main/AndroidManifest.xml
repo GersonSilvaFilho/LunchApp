@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".restaurants.RestaurantsActivity"
+            android:name=".restaurants.RestaurantActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".restaurantDetail.RestaurantDetailActivity" />

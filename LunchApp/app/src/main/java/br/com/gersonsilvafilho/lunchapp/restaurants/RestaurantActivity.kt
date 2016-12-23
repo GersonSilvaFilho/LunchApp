@@ -21,7 +21,7 @@ import java.util.*
 
 
 
-class RestaurantsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class RestaurantActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
-import br.com.gersonsilvafilho.lunchapp.restaurants.RestaurantsActivity;
+import br.com.gersonsilvafilho.lunchapp.restaurants.RestaurantActivity;
 
 public class MyAlarmReceiver extends BroadcastReceiver
 {
@@ -24,7 +24,7 @@ public class MyAlarmReceiver extends BroadcastReceiver
        mNotificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent newIntent = new Intent(context, RestaurantsActivity.class);
+        Intent newIntent = new Intent(context, RestaurantActivity.class);
         newIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         // If you use intent extras, remember to call PendingIntent.getActivity() with the flag

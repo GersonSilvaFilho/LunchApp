@@ -35,6 +35,8 @@ class RestaurantDetailActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_detail)
 
+        getSupportActionBar()?.setTitle(getString(R.string.restaurant_details_topbar))
+
         // Get the requested Restaurant id
         val RestaurantId = intent.getStringExtra(EXTRA_RESTAURANT_ID)
         val dateUnix = intent.getLongExtra(EXTRA_DATE, 0)

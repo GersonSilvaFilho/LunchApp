@@ -1,8 +1,9 @@
 package br.com.gersonsilvafilho.lunchapp.data
 
 import com.google.common.base.Objects
+import kotlin.comparisons.compareValuesBy
 
-class Restaurant @JvmOverloads constructor(val id: String, val title: String?, val description: String?, val imageUrl: String? = null) {
+class Restaurant @JvmOverloads constructor(val id: String, val title: String?, val description: String?, val imageUrl: String? = null) : Comparable<Restaurant>{
 
     var votes : Int = 0;
 
@@ -27,4 +28,6 @@ class Restaurant @JvmOverloads constructor(val id: String, val title: String?, v
     {
         votes += numVotes
     }
+
+    override fun compareTo(other: Restaurant) = compareValuesBy(this, other, { it.votes })
 }

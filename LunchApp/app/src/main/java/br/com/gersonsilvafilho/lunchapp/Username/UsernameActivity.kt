@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import br.com.gersonsilvafilho.lunchapp.R
 import br.com.gersonsilvafilho.lunchapp.notification.AlarmManagerBroadcastReceiver
-import br.com.gersonsilvafilho.lunchapp.restaurants.RestaurantsActivity
+import br.com.gersonsilvafilho.lunchapp.restaurants.RestaurantActivity
 import br.com.gersonsilvafilho.lunchapp.restaurants.UsernameContract
 import br.com.gersonsilvafilho.lunchapp.util.UserInfo
 import kotlinx.android.synthetic.main.activity_username.*
@@ -49,7 +49,7 @@ class UsernameActivity : AppCompatActivity(), UsernameContract.View {
     }
 
     override fun showRestaurantlUi() {
-        val intent = Intent(this, RestaurantsActivity::class.java)
+        val intent = Intent(this, RestaurantActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         this.overridePendingTransition(0, 0)

@@ -9,7 +9,7 @@ import android.content.Intent
 import android.support.v4.app.TaskStackBuilder
 import android.support.v7.app.NotificationCompat
 import br.com.gersonsilvafilho.lunchapp.R
-import br.com.gersonsilvafilho.lunchapp.restaurants.RestaurantsActivity
+import br.com.gersonsilvafilho.lunchapp.restaurants.RestaurantActivity
 import java.util.*
 
 class AlarmManagerBroadcastReceiver : BroadcastReceiver() {
@@ -19,9 +19,9 @@ class AlarmManagerBroadcastReceiver : BroadcastReceiver() {
         mBuilder.setSmallIcon(R.mipmap.ic_launcher)
         mBuilder.setContentTitle("Lunch place was selected!")
         mBuilder.setContentText("Click here to see today voting")
-        val resultIntent = Intent(context, RestaurantsActivity::class.java)
+        val resultIntent = Intent(context, RestaurantActivity::class.java)
         val stackBuilder = TaskStackBuilder.create(context)
-        stackBuilder.addParentStack(RestaurantsActivity::class.java)
+        stackBuilder.addParentStack(RestaurantActivity::class.java)
 
         // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent)

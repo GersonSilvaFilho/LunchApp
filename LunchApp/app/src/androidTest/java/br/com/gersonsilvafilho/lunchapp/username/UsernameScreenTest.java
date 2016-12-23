@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import br.com.gersonsilvafilho.lunchapp.R;
-import br.com.gersonsilvafilho.lunchapp.restaurants.RestaurantsActivity;
+import br.com.gersonsilvafilho.lunchapp.restaurants.RestaurantActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -44,7 +44,7 @@ import static org.hamcrest.core.AllOf.allOf;
 
 
 /**
- * Tests for the {@link DrawerLayout} layout component in {@link RestaurantsActivity} which manages
+ * Tests for the {@link DrawerLayout} layout component in {@link RestaurantActivity} which manages
  * navigation within the app.
  */
 @RunWith(AndroidJUnit4.class)

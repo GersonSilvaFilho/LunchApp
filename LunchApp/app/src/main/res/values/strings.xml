@@ -32,4 +32,5 @@
     <string name="nav_tomorrow_text">Tomorrow Voting</string>
     <string name="nav_today_text">Today Restaurant</string>
     <string name="username_toolbar_text">Register</string>
+    <string name="restaurant_details_topbar">Restaurant Details</string>
 </resources>

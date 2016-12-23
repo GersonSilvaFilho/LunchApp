@@ -26,7 +26,7 @@ import java.util.*
 interface RestaurantServiceApi {
 
     interface RestaurantsServiceCallback<T> {
-        fun onLoaded(Restaurants: T)
+        fun onLoaded(Restaurants: T?)
     }
 
     fun getAllRestaurant(date: Date, callback: RestaurantsServiceCallback<List<Restaurant>>)

@@ -79,8 +79,8 @@ public class RestaurantsScreenTest {
      * blocks of Junit tests.
      */
     @Rule
-    public ActivityTestRule<RestaurantsActivity> mNotesActivityTestRule =
-            new ActivityTestRule<>(RestaurantsActivity.class);
+    public ActivityTestRule<RestaurantActivity> mNotesActivityTestRule =
+            new ActivityTestRule<>(RestaurantActivity.class);
 
 
 }

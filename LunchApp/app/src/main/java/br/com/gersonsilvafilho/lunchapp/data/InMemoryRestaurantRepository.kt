@@ -29,7 +29,7 @@ class InMemoryRestaurantRepository(restaurantServiceApi: RestaurantServiceApi) :
         // Load from API only if needed.
         if (mCachedRestaurants == null) {
             mRestaurantServiceApi.getAllRestaurant(date, object : RestaurantServiceApi.RestaurantsServiceCallback<List<Restaurant>> {
-                override fun onLoaded(restaurants: List<Restaurant>) {
+                override fun onLoaded(restaurants: List<Restaurant>?) {
                     mCachedRestaurants = ImmutableList.copyOf(restaurants)
                     callback.onRestaurantsLoaded(mCachedRestaurants!!)
                 }
@@ -50,7 +50,7 @@ class InMemoryRestaurantRepository(restaurantServiceApi: RestaurantServiceApi) :
         checkNotNull(callback)
         // Load Restaurants matching the id always directly from the API.
         mRestaurantServiceApi.getRestaurant(RestaurantId, object : RestaurantServiceApi.RestaurantsServiceCallback<Restaurant> {
-            override fun onLoaded(restaurant: Restaurant) {
+            override fun onLoaded(restaurant: Restaurant?) {
                 callback.onRestaurantsLoaded(restaurant)
             }
         })
@@ -66,8 +66,8 @@ class InMemoryRestaurantRepository(restaurantServiceApi: RestaurantServiceApi) :
         // Load Restaurants matching the id always directly from the API.
         mRestaurantServiceApi.getRestaurantImageBitmap(RestaurantId, imgHeight, imageWidth, object : RestaurantServiceApi.RestaurantsServiceCallback<Bitmap>
         {
-            override fun onLoaded(bitmap: Bitmap) {
-                callback.onRestaurantImageLoaded(bitmap)
+            override fun onLoaded(bitmap: Bitmap?) {
+                callback.onRestaurantImageLoaded(bitmap!!)
             }
         })
     }
@@ -79,9 +79,9 @@ class InMemoryRestaurantRepository(restaurantServiceApi: RestaurantServiceApi) :
 
         mRestaurantServiceApi.sendRestaurantVote(RestaurantId, UserId, date, object : RestaurantServiceApi.RestaurantsServiceCallback<Map<String,String>>
         {
-            override fun onLoaded(voteIsOk: Map<String,String>)
+            override fun onLoaded(voteIsOk: Map<String,String>?)
             {
-                callback.onRestaurantVote(voteIsOk)
+                callback.onRestaurantVote(voteIsOk!!)
             }
         })
     }
