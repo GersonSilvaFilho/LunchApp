@@ -26,6 +26,7 @@ import android.view.ViewGroup
 import br.com.gersonsilvafilho.lunchapp.Injection
 import br.com.gersonsilvafilho.lunchapp.R
 import br.com.gersonsilvafilho.lunchapp.util.EspressoIdlingResource
+import br.com.gersonsilvafilho.lunchapp.util.UserInfo
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.GlideDrawable
@@ -54,9 +55,7 @@ class RestaurantDetailFragment : Fragment(), RestaurantDetailContract.View {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         fab!!.setOnClickListener { view ->
-            mActionsListener?.fabButtonClick()
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            mActionsListener?.fabButtonClick(UserInfo.username)
         }
     }
 

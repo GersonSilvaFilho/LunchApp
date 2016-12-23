@@ -25,6 +25,6 @@ class Restaurant @JvmOverloads constructor(val id: String, val title: String?, v
 
     fun incrementVotes()
     {
-
+        votes++
     }
 }

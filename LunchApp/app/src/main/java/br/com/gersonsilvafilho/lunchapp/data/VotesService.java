@@ -3,6 +3,8 @@ package br.com.gersonsilvafilho.lunchapp.data;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
@@ -15,13 +17,12 @@ import retrofit.Retrofit;
 public class VotesService {
 
     private final VotesServiceApi votesServiceApi;
-    private String baseUrl = "http://prjctx.herokuapp.com/";
+    private String baseUrl = "https://prjctx.000webhostapp.com/";
 
 
     public VotesService()
     {
         OkHttpClient client = new OkHttpClient();
-        // client.interceptors().add(new LoggingInterceptor());
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -31,13 +32,13 @@ public class VotesService {
         this.votesServiceApi = retrofit.create(VotesServiceApi.class);
     }
 
-    public void SendVote(Vote vote, Callback<Boolean> callback)
+    public void SendVote(Vote vote, Callback<Map<String,String>> callback)
     {
-        this.votesServiceApi.SendVote(vote.date, vote.userId, vote.restaurantId).enqueue(callback);
+        this.votesServiceApi.SendVote(vote.date, vote.restaurantId, vote.userId).enqueue(callback);
     }
 
-    public void GetVotesFromDay(Date date, Callback<VotesList> callback)
+    public void GetVotesFromDay(Date date, Callback<Map<String,List<String>>> callback)
     {
-        this.votesServiceApi.GetVotesFromDay(date.getTime()/1000, "UserIDTest").enqueue(callback);
+        this.votesServiceApi.GetVotesFromDay(date.getTime()/1000).enqueue(callback);
     }
 }

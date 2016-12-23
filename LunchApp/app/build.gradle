@@ -94,6 +94,9 @@ dependencies {
     //Retrofit
     compile "com.squareup.retrofit:retrofit:$rootProject.ext.retrofitVersions"
     compile "com.squareup.retrofit:converter-gson:$rootProject.ext.retrofitVersions"
+
+    //Shared Preferences helper
+    compile "com.chibatching:kotpref:$rootProject.ext.kotPreferences"
 }
 
 /*

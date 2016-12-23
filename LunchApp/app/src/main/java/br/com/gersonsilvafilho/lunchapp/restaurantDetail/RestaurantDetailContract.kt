@@ -50,6 +50,6 @@ interface RestaurantDetailContract {
 
         fun openRestaurant(RestaurantId: String?)
 
-        fun fabButtonClick()
+        fun fabButtonClick(userId: String)
     }
 }

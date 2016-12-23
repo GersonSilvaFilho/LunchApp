@@ -13,7 +13,6 @@ interface RestaurantContract {
 
         fun showRestaurants(restaurants: List<Restaurant>)
 
-
         fun showRestaurantDetailUi(RestaurantId: String)
 
         fun showSnackbarText(textToShow: String)

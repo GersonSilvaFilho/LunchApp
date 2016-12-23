@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.Response;
@@ -92,10 +93,10 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
                 }
 
                 //Get votes from the other API
-                votesService.GetVotesFromDay(new Date(), new Callback<VotesList>() {
+                votesService.GetVotesFromDay(new Date(), new Callback<Map<String,List<String>>>() {
                             @Override
-                            public void onResponse(Response<VotesList> response, Retrofit retrofit) {
-                                if(response.body() == null || response.body().votes == null )
+                            public void onResponse(Response<Map<String,List<String>>> response, Retrofit retrofit) {
+                                if(response.body() == null )
                                 {
                                     callback.onLoaded(restaurants);
                                     return;
@@ -103,9 +104,9 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
 
                                 for (Restaurant restaurant: restaurants)
                                 {
-                                    for(Vote vote: response.body().votes)
+                                    for(Map.Entry<String, List<String>> vote: response.body().entrySet())
                                     {
-                                        if(vote.restaurantId == restaurant.getId())
+                                        if(vote.getKey().equals(restaurant.getId()))
                                         {
                                             restaurant.incrementVotes();
                                         }
@@ -116,7 +117,7 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
 
                             @Override
                             public void onFailure(Throwable t) {
-                                //TODO
+                                callback.onLoaded(restaurants);
                             }
                         });
                 //release object
@@ -223,18 +224,18 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
     }
 
     @Override
-    public void sendRestaurantVote(@NotNull String restaurantId, @NotNull final RestaurantsServiceCallback<Boolean> callback) {
-        Vote vote = new Vote("testUser", restaurantId, new Date().getTime());
-        votesService.SendVote(vote, new Callback<Boolean>() {
+    public void sendRestaurantVote(@NotNull String restaurantId, @NotNull String userId, @NotNull final RestaurantsServiceCallback<Map<String,String>> callback) {
+        Vote vote = new Vote(userId, restaurantId, new Date().getTime()/1000);
+        votesService.SendVote(vote, new Callback<Map<String,String>>() {
             @Override
-            public void onResponse(Response<Boolean> response, Retrofit retrofit) {
-                callback.onLoaded(response.body().booleanValue());
+            public void onResponse(Response<Map<String,String>> response, Retrofit retrofit) {
+                callback.onLoaded(response.body());
             }
 
             @Override
             public void onFailure(Throwable t) {
                 //TODO
-                callback.onLoaded(false);
+                callback.onLoaded(null);
             }
         });
     }

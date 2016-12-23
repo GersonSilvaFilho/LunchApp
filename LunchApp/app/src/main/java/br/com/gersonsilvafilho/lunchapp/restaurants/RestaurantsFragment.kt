@@ -97,7 +97,7 @@ class RestaurantsFragment : Fragment(), RestaurantContract.View {
 
     override fun onResume() {
         super.onResume()
-        mActionsListener?.loadRestaurants(false)
+        mActionsListener?.loadRestaurants(true)
         showSnackbarText("Long click to add a Vote")
     }
 

@@ -36,5 +36,5 @@ interface RestaurantServiceApi {
 
     fun saveRestaurant(restaurant: Restaurant)
 
-    fun sendRestaurantVote(restaurantId: String, callback: RestaurantsServiceCallback<Boolean>)
+    fun sendRestaurantVote(restaurantId: String, userId: String, callback: RestaurantsServiceCallback<Map<String,String>>)
 }

@@ -85,17 +85,25 @@ class RestaurantDetailPresenter(RestaurantsRepository: RestaurantRepository,
         })
     }
 
-    override fun fabButtonClick()
+    override fun fabButtonClick(userId: String)
     {
-        mRestaurantsRepository.sendRestaurantVote(mRestaurant?.id!!, object : RestaurantRepository.SendRestaurantVoteCallback{
-            override fun onRestaurantVote(voteIsOk: Boolean) {
-                if (voteIsOk)
+        mRestaurantsRepository.sendRestaurantVote(mRestaurant?.id!!, userId, object : RestaurantRepository.SendRestaurantVoteCallback{
+            override fun onRestaurantVote(result: Map<String,String>) {
+                if (result != null)
                 {
+                    if(result["result"] == "Success")
+                    {
+                        mRestaurantsDetailView.showSnackbarText("Vote successfully registered!")
+                    }
+                    else
+                    {
+                        mRestaurantsDetailView.showSnackbarText("You can only vote one time per day!")
+                    }
                     //Show ok!
                 }
                 else
                 {
-                    //Show Error!
+                    mRestaurantsDetailView.showSnackbarText("Failed to register your vote.")
                 }
             }
 
