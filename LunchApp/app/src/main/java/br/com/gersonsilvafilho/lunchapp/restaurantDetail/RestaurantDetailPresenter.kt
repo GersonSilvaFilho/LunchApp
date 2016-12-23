@@ -91,7 +91,7 @@ class RestaurantDetailPresenter(RestaurantsRepository: RestaurantRepository,
             override fun onRestaurantVote(result: Map<String,String>) {
                 if (result != null)
                 {
-                    if(result["result"] == "Success")
+                    if(result["result"].equals("success"))
                     {
                         mRestaurantsDetailView.showSnackbarText("Vote successfully registered!")
                     }

@@ -108,7 +108,7 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
                                     {
                                         if(vote.getKey().equals(restaurant.getId()))
                                         {
-                                            restaurant.incrementVotes();
+                                            restaurant.incrementVotes(vote.getValue().size());
                                         }
                                     }
                                 }
@@ -124,35 +124,6 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
                 likelyPlaces.release();
             }
         });
-
-//        AutocompleteFilter autocompleteFilter=new AutocompleteFilter.Builder().setTypeFilter(Place.TYPE_RESTAURANT).build();
-//
-//
-//        Places.GeoDataApi
-//                .getAutocompletePredictions(mGoogleApiClient,"Restaurante", bounds, autocompleteFilter).setResultCallback(new ResultCallback<AutocompletePredictionBuffer>() {
-//            @Override
-//            public void onResult(@NonNull AutocompletePredictionBuffer autocompletePredictions) {
-//                Status status=autocompletePredictions.getStatus();
-////                Iterator<AutocompletePrediction> iterator=autocompletePredictions.iterator();
-//                List<Restaurant> restaurants = new ArrayList<>();
-////                while (iterator.hasNext()){
-////                    AutocompletePrediction autocompletePrediction=iterator.next();
-////                    // do something
-////
-////                }
-//
-//                if( autocompletePredictions.getStatus().isSuccess() ) {
-//                    for( AutocompletePrediction prediction : autocompletePredictions ) {
-//                        //Add as a new item to avoid IllegalArgumentsException when buffer is released
-//                        Restaurant restaurant = new Restaurant(prediction.getPrimaryText(null).toString()
-//                                ,prediction.getFullText(null).toString());
-//                        restaurants.add(restaurant);
-//                    }
-//                }
-//                callback.onLoaded(restaurants);
-//            }
-//        }, 20, TimeUnit.SECONDS);
-
     }
 
     @Override
@@ -175,7 +146,6 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
 
     @Override
     public void saveRestaurant(Restaurant restaurant) {
-//        RESTAURANT_SERVICE_DATA.put(restaurant.getId(), restaurant);
     }
 
     @Override

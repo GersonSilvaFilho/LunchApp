@@ -23,8 +23,8 @@ class Restaurant @JvmOverloads constructor(val id: String, val title: String?, v
         return Objects.hashCode(id, title, description, imageUrl)
     }
 
-    fun incrementVotes()
+    fun incrementVotes(numVotes: Int)
     {
-        votes++
+        votes += numVotes
     }
 }
