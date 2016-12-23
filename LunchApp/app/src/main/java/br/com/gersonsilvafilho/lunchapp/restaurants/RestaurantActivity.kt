@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.app_bar_restaurants.*
 import java.util.*
 
 
-
 class RestaurantActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +36,8 @@ class RestaurantActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         nav_view.setNavigationItemSelectedListener(this)
 
         val username_textview = nav_view.getHeaderView(0).findViewById(R.id.nav_username) as TextView
+
+
 
         username_textview.setText(UserInfo.username)
         if (null == savedInstanceState) {
@@ -94,8 +95,6 @@ class RestaurantActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             intent.putExtra(UsernameActivity.EXTRA_IS_NAME_CHANGE, true)
             startActivity(intent)
             return true
-        } else if (id == R.id.nav_about) {
-
         }
         val fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction()

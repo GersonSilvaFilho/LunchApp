@@ -31,11 +31,11 @@ interface RestaurantServiceApi {
 
     fun getAllRestaurant(date: Date, callback: RestaurantsServiceCallback<List<Restaurant>>)
 
-    fun getRestaurant(RestaurantId: String, callback: RestaurantsServiceCallback<Restaurant>)
-
     fun getRestaurantImageBitmap(RestaurantId: String, imgHeight: Int, imageWidth: Int, callback: RestaurantsServiceCallback<Bitmap>)
 
     fun saveRestaurant(restaurant: Restaurant)
 
     fun sendRestaurantVote(restaurantId: String, userId: String, date: Date, callback: RestaurantsServiceCallback<Map<String,String>>)
+
+    fun getRestaurant(RestaurantId: String, date: Date, callback: RestaurantsServiceCallback<Restaurant>)
 }

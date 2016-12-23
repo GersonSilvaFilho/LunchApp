@@ -45,12 +45,15 @@ interface RestaurantDetailContract {
         fun showDescription(description: String)
 
         fun showSnackbarText(textToShow: String)
+
+        fun showVotes(textToShow: String)
     }
 
     interface UserActionsListener {
 
-        fun openRestaurant(RestaurantId: String?)
+        fun openRestaurant(RestaurantId: String?, date: Date)
 
         fun fabButtonClick(userId: String, date: Date)
+
     }
 }

@@ -19,7 +19,6 @@ package br.com.gersonsilvafilho.lunchapp.restaurantDetail
 import android.graphics.Bitmap
 import br.com.gersonsilvafilho.lunchapp.data.Restaurant
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepository
-import com.google.common.base.Preconditions.checkNotNull
 import java.util.*
 
 /**
@@ -36,11 +35,11 @@ class RestaurantDetailPresenter(RestaurantsRepository: RestaurantRepository,
     private val mRestaurantsDetailView: RestaurantDetailContract.View
 
     init {
-        mRestaurantsRepository = checkNotNull(RestaurantsRepository, "RestaurantsRepository cannot be null!")
-        mRestaurantsDetailView = checkNotNull(RestaurantDetailView, "RestaurantDetailView cannot be null!")
+        mRestaurantsRepository = RestaurantsRepository
+        mRestaurantsDetailView = RestaurantDetailView
     }
 
-    override fun openRestaurant(RestaurantId: String?) {
+    override fun openRestaurant(RestaurantId: String?, date: Date) {
         if (null == RestaurantId || RestaurantId.isEmpty()) {
             mRestaurantsDetailView.showMissingRestaurant()
             return
@@ -49,7 +48,7 @@ class RestaurantDetailPresenter(RestaurantsRepository: RestaurantRepository,
 
 
         mRestaurantsDetailView.setProgressIndicator(true)
-        mRestaurantsRepository.getRestaurant(RestaurantId, object : RestaurantRepository.GetRestaurantCallback {
+        mRestaurantsRepository.getRestaurant(RestaurantId, date, object : RestaurantRepository.GetRestaurantCallback {
             override fun onRestaurantsLoaded(Restaurant: Restaurant?) {
                 mRestaurant = Restaurant
                 mRestaurantsDetailView.setProgressIndicator(false)
@@ -66,6 +65,7 @@ class RestaurantDetailPresenter(RestaurantsRepository: RestaurantRepository,
     private fun showRestaurant(Restaurant: Restaurant) {
         val title = Restaurant.title
         val description = Restaurant.description
+        val votes = Restaurant.votes
 
         if (title != null && title.isEmpty()) {
             mRestaurantsDetailView.hideTitle()
@@ -73,13 +73,15 @@ class RestaurantDetailPresenter(RestaurantsRepository: RestaurantRepository,
             mRestaurantsDetailView.showTitle(title!!)
         }
 
+        mRestaurantsDetailView.showVotes(votes.toString())
+
         if (description != null && description.isEmpty()) {
             mRestaurantsDetailView.hideDescription()
         } else {
             mRestaurantsDetailView.showDescription(description!!)
         }
 
-        mRestaurantsRepository.getRestaurantImageBitmap(Restaurant.id, 200, 200, object : RestaurantRepository.GetRestaurantImageCallback{
+        mRestaurantsRepository.getRestaurantImageBitmap(Restaurant.id, 300, 300, object : RestaurantRepository.GetRestaurantImageCallback{
             override fun onRestaurantImageLoaded(bitmap: Bitmap) {
                 mRestaurantsDetailView.showImageBitmap(bitmap)
             }

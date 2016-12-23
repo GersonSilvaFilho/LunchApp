@@ -19,23 +19,20 @@ package br.com.gersonsilvafilho.lunchapp.username;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.widget.TextView;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import br.com.gersonsilvafilho.lunchapp.R;
-import br.com.gersonsilvafilho.lunchapp.restaurants.RestaurantActivity;
+import br.com.gersonsilvafilho.lunchapp.util.UserInfo;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.contrib.DrawerActions.open;
-import static android.support.test.espresso.contrib.DrawerMatchers.isClosed;
-import static android.support.test.espresso.contrib.NavigationViewActions.navigateTo;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -43,42 +40,28 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.core.AllOf.allOf;
 
 
-/**
- * Tests for the {@link DrawerLayout} layout component in {@link RestaurantActivity} which manages
- * navigation within the app.
- */
-@RunWith(AndroidJUnit4.class)
 @LargeTest
 public class UsernameScreenTest {
 
-    /**
-     * {@link ActivityTestRule} is a JUnit {@link Rule @Rule} to launch your activity under test.
-     *
-     * <p>
-     * Rules are interceptors which are executed for each test method and are important building
-     * blocks of Junit tests.
-     */
     @Rule
     public ActivityTestRule<UsernameActivity> mActivityTestRule =
             new ActivityTestRule<>(UsernameActivity.class);
 
+    @Before
+    public void setupUsername() {
+        UserInfo.INSTANCE.setUsername("");
+    }
+
     @Test
-    public void clickOnTomorrowNav_ShowsTomorrowTab() {
-        // Open Drawer to click on navigation.
-        onView(withId(R.id.drawer_layout))
-                .check(matches(isClosed(Gravity.LEFT))) // Left Drawer should be closed.
-                .perform(open()); // Open Drawer
+    public void enterUsername_ShowsHomeTab() {
+        onView(withId(R.id.username_textview)).perform(typeText("Username"), closeSoftKeyboard());
 
-        // Start tomorrow view
-        onView(withId(R.id.nav_view))
-                .perform(navigateTo(R.id.nav_tomorrow));
+        onView(withId(R.id.email_sign_in_button)).perform(click());
 
-       // Check that statistics Activity was opened.
-        String expectedTomorrowToolbarText = InstrumentationRegistry.getTargetContext()
-                .getString(R.string.nav_tomorrow_text);
-
+        String expectedTodayToolbarText = InstrumentationRegistry.getTargetContext()
+                .getString(R.string.nav_today_text);
 
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(expectedTomorrowToolbarText)));
+                .check(matches(withText(expectedTodayToolbarText)));
     }
 }

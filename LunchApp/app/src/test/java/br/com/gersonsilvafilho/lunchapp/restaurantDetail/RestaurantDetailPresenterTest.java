@@ -23,6 +23,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Date;
 import java.util.UUID;
 
 import br.com.gersonsilvafilho.lunchapp.data.Restaurant;
@@ -41,6 +42,8 @@ public class RestaurantDetailPresenterTest {
     public static final String TITLE_TEST = "title";
 
     public static final String DESCRIPTION_TEST = "description";
+
+    public static final Date DATE = new Date();
 
     @Mock
     private RestaurantRepository mRestaurantsRepository;
@@ -73,10 +76,10 @@ public class RestaurantDetailPresenterTest {
         Restaurant note = new Restaurant(UUID.randomUUID().toString(), TITLE_TEST, DESCRIPTION_TEST);
 
         // When notes presenter is asked to open a note
-        mRestaurantsDetailsPresenter.openRestaurant(note.getId());
+        mRestaurantsDetailsPresenter.openRestaurant(note.getId(), DATE);
 
         // Then note is loaded from model, callback is captured and progress indicator is shown
-        verify(mRestaurantsRepository).getRestaurant(eq(note.getId()), mGetRestaurantCallbackCaptor.capture());
+        verify(mRestaurantsRepository).getRestaurant(eq(note.getId()), eq(DATE), mGetRestaurantCallbackCaptor.capture());
         verify(mRestaurantDetailView).setProgressIndicator(true);
 
         // When note is finally loaded
@@ -91,12 +94,12 @@ public class RestaurantDetailPresenterTest {
     @Test
     public void getUnknownRestaurantFromRepositoryAndLoadIntoView() {
         // When loading of a note is requested with an invalid note ID.
-        mRestaurantsDetailsPresenter.openRestaurant(INVALID_ID);
+        mRestaurantsDetailsPresenter.openRestaurant(INVALID_ID, DATE);
 
         // Then note with invalid id is attempted to load from model, callback is captured and
         // progress indicator is shown.
         verify(mRestaurantDetailView).setProgressIndicator(true);
-        verify(mRestaurantsRepository).getRestaurant(eq(INVALID_ID), mGetRestaurantCallbackCaptor.capture());
+        verify(mRestaurantsRepository).getRestaurant(eq(INVALID_ID), eq(DATE), mGetRestaurantCallbackCaptor.capture());
 
         // When note is finally loaded
         mGetRestaurantCallbackCaptor.getValue().onRestaurantsLoaded(null); // Trigger callback

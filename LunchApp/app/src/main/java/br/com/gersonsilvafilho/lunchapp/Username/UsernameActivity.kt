@@ -3,6 +3,7 @@ package br.com.gersonsilvafilho.lunchapp.username
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import br.com.gersonsilvafilho.lunchapp.R
 import br.com.gersonsilvafilho.lunchapp.notification.AlarmManagerBroadcastReceiver
 import br.com.gersonsilvafilho.lunchapp.restaurants.RestaurantActivity
@@ -33,6 +34,10 @@ class UsernameActivity : AppCompatActivity(), UsernameContract.View {
         //Set enter button click
         email_sign_in_button.setOnClickListener {
 
+            if(!validateFieldkUsername())
+            {
+                return@setOnClickListener
+            }
             //Set timer to notify every day at 13 PM
             setTimer()
 
@@ -63,5 +68,15 @@ class UsernameActivity : AppCompatActivity(), UsernameContract.View {
     {
         var alarm = AlarmManagerBroadcastReceiver()
         alarm.setTimer(this)
+    }
+
+    private fun validateFieldkUsername() : Boolean
+    {
+        if(username_textview.text.isEmpty())
+        {
+            Toast.makeText(this, getString(R.string.toast_username_empty), Toast.LENGTH_LONG).show()
+            return false
+        }
+        return true
     }
 }

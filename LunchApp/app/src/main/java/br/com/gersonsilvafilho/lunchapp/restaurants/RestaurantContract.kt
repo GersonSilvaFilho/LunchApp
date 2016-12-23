@@ -4,9 +4,8 @@ import br.com.gersonsilvafilho.lunchapp.data.Restaurant
 import java.util.*
 
 /**
- * Created by GersonSilva on 12/21/16.
+ * This specifies the contract between the view and the presenter.
  */
-
 interface RestaurantContract {
     interface View {
 
@@ -17,6 +16,8 @@ interface RestaurantContract {
         fun showRestaurantDetailUi(RestaurantId: String)
 
         fun showSnackbarText(textToShow: String)
+
+        fun showEmptyTextView(active: Boolean)
     }
 
     interface UserActionsListener {

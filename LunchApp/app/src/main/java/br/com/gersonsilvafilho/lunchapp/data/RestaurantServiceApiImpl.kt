@@ -100,13 +100,14 @@ class RestaurantServiceApiImpl(context: Context) : RestaurantServiceApi, GoogleA
             val restaurants = ArrayList<Restaurant>()
 
             for (placeLikelihood in likelyPlaces) {
+                Log.i(LOG_TAG, String.format("Place '%s' with " + "likelihood: %g",
+                        placeLikelihood.place.name,
+                        placeLikelihood.likelihood))
                 if (placeLikelihood.place.placeTypes.contains(Place.TYPE_RESTAURANT) ||
                         placeLikelihood.place.placeTypes.contains(Place.TYPE_CAFE) ||
                         placeLikelihood.place.placeTypes.contains(Place.TYPE_BAKERY) ||
                         placeLikelihood.place.placeTypes.contains(Place.TYPE_BAR)) {
-                    Log.i(LOG_TAG, String.format("Place '%s' with " + "likelihood: %g",
-                            placeLikelihood.place.name,
-                            placeLikelihood.likelihood))
+
                     val restaurant = Restaurant(placeLikelihood.place.id, placeLikelihood.place.name.toString(), placeLikelihood.place.phoneNumber.toString())
                     restaurants.add(restaurant)
                 }
@@ -140,10 +141,34 @@ class RestaurantServiceApiImpl(context: Context) : RestaurantServiceApi, GoogleA
         }
     }
 
-    override fun getRestaurant(RestaurantId: String, callback: RestaurantServiceApi.RestaurantsServiceCallback<Restaurant>) {
+    override fun getRestaurant(RestaurantId: String, date: Date, callback: RestaurantServiceApi.RestaurantsServiceCallback<Restaurant>) {
         val result = Places.GeoDataApi.getPlaceById(mGoogleApiClient, RestaurantId)
         result.setResultCallback { places ->
             if (places.status.isSuccess) {
+
+                val restaurant = Restaurant(places[0].id, places[0].name.toString(), places[0].address.toString())
+                //Get votes from api
+                votesService.GetVotesFromDay(date, object : Callback<Map<String, List<String>>> {
+                    override fun onResponse(response: Response<Map<String, List<String>>>, retrofit: Retrofit) {
+                        if (response.body() == null) {
+                            callback.onLoaded(restaurant)
+                            return
+                        }
+
+                        for ((key, value) in response.body()) {
+                            if (key == restaurant.id) {
+                                restaurant.incrementVotes(value.size)
+                            }
+                        }
+                        //This order the restaurants from Most voted to less voted
+                        callback.onLoaded(restaurant)
+                    }
+
+                    override fun onFailure(t: Throwable) {
+                        callback.onLoaded(restaurant)
+                    }
+                })
+
                 for (place in places) {
                     val restaurant = Restaurant(place.id, place.name.toString(), place.address.toString())
                     callback.onLoaded(restaurant)

@@ -44,7 +44,7 @@ interface RestaurantRepository {
 
     fun getRestaurants(date: Date, callback: LoadRestaurantsCallback)
 
-    fun getRestaurant(RestaurantId: String, callback: GetRestaurantCallback)
+    fun getRestaurant(RestaurantId: String, date: Date, callback: GetRestaurantCallback)
 
     fun saveRestaurant(Restaurant: Restaurant)
 
@@ -53,5 +53,6 @@ interface RestaurantRepository {
     fun getRestaurantImageBitmap(RestaurantId: String, imgHeight: Int, imageWidth: Int, callback: GetRestaurantImageCallback)
 
     fun sendRestaurantVote(RestaurantId: String, UserId: String, date: Date, callback: SendRestaurantVoteCallback)
+
 
 }

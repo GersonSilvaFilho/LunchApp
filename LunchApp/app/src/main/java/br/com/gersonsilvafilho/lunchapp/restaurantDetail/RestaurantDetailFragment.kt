@@ -40,7 +40,6 @@ import java.util.*
  */
 class RestaurantDetailFragment(date : Date) : Fragment(), RestaurantDetailContract.View {
 
-
     private var mActionsListener: RestaurantDetailContract.UserActionsListener? = null
 
     private var date : Date? = null
@@ -72,7 +71,7 @@ class RestaurantDetailFragment(date : Date) : Fragment(), RestaurantDetailContra
     override fun onResume() {
         super.onResume()
         val RestaurantId = arguments.getString(ARGUMENT_Restaurant_ID)
-        mActionsListener!!.openRestaurant(RestaurantId)
+        mActionsListener!!.openRestaurant(RestaurantId, date!!)
     }
 
     override fun setProgressIndicator(active: Boolean) {
@@ -150,5 +149,9 @@ class RestaurantDetailFragment(date : Date) : Fragment(), RestaurantDetailContra
 
     override fun showSnackbarText(textToShow: String) {
         Snackbar.make(this.view!!, textToShow, Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun showVotes(textToShow: String) {
+        restaurant_detail_votes.text = textToShow
     }
 }

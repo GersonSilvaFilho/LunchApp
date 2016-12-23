@@ -53,6 +53,6 @@ class AlarmManagerBroadcastReceiver : BroadcastReceiver() {
 
         val pi = PendingIntent.getBroadcast(context, 0, intent, 0)
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,
-                (1000 * 30).toLong(), pi)
+                AlarmManager.INTERVAL_DAY, pi)
     }
 }

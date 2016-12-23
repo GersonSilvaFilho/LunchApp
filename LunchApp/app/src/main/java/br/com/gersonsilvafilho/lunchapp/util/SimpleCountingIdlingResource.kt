@@ -17,10 +17,7 @@
 package br.com.gersonsilvafilho.lunchapp.util
 
 import android.support.test.espresso.IdlingResource
-
 import java.util.concurrent.atomic.AtomicInteger
-
-import com.google.common.base.Preconditions.checkNotNull
 
 /**
  * A simple counter implementation of [IdlingResource] that determines idleness by
@@ -48,7 +45,7 @@ class SimpleCountingIdlingResource
     @Volatile private var resourceCallback: IdlingResource.ResourceCallback? = null
 
     init {
-        mResourceName = checkNotNull(resourceName)
+        mResourceName = resourceName
     }
 
     override fun getName(): String {

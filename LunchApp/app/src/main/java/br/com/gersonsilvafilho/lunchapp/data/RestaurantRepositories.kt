@@ -16,17 +16,14 @@
 
 package br.com.gersonsilvafilho.lunchapp.data
 
-import com.google.common.base.Preconditions.checkNotNull
-
 object RestaurantRepositories {
 
     private var repository: RestaurantRepository? = null
 
     @Synchronized fun getInMemoryRepoInstance(restaurantServiceApi: RestaurantServiceApi): RestaurantRepository? {
-        checkNotNull(restaurantServiceApi)
         if (null == repository) {
             repository = InMemoryRestaurantRepository(restaurantServiceApi)
         }
         return repository
     }
-}// no instance
+}

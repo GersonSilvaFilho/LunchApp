@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import br.com.gersonsilvafilho.lunchapp.R
 import br.com.gersonsilvafilho.lunchapp.data.Restaurant
-import com.google.common.base.Preconditions.checkNotNull
 
+/**
+ * The adapter used on Recycler View on RestaurantsFragment
+ */
 class RestaurantAdapter(restaurants: List<Restaurant>, private val mItemListener: RestaurantAdapter.RestaurantItemListener) : RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
 
     private var mRestaurants: List<Restaurant>? = null
@@ -38,7 +40,7 @@ class RestaurantAdapter(restaurants: List<Restaurant>, private val mItemListener
     }
 
     private fun setList(restaurants: List<Restaurant>) {
-        mRestaurants = checkNotNull<List<Restaurant>>(restaurants)
+        mRestaurants = restaurants
     }
 
     override fun getItemCount(): Int {

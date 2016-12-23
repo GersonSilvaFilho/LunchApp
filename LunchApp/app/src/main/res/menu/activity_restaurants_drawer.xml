@@ -15,13 +15,4 @@
             android:id="@+id/nav_username"
             android:title="Change Username" />
     </group>
-
-    <item android:title="About">
-        <menu>
-            <item
-                android:id="@+id/nav_about"
-                android:title="About the Dev" />
-        </menu>
-    </item>
-
 </menu>

@@ -33,4 +33,5 @@
     <string name="nav_today_text">Today Restaurant</string>
     <string name="username_toolbar_text">Register</string>
     <string name="restaurant_details_topbar">Restaurant Details</string>
+    <string name="toast_username_empty">Username cannot be empty</string>
 </resources>

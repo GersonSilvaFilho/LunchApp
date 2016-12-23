@@ -20,7 +20,6 @@ package br.com.gersonsilvafilho.lunchapp.restaurants
 import br.com.gersonsilvafilho.lunchapp.data.Restaurant
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepository
 import br.com.gersonsilvafilho.lunchapp.util.EspressoIdlingResource
-import com.google.common.base.Preconditions.checkNotNull
 import java.util.*
 
 
@@ -34,8 +33,8 @@ class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurant
     private val mRestaurantView: RestaurantContract.View
 
     init {
-        mRestaurantRepository = checkNotNull<RestaurantRepository>(restaurantRepository, "restaurantRepository cannot be null")
-        mRestaurantView = checkNotNull<RestaurantContract.View>(restaurantView, "restaurantView cannot be null!")
+        mRestaurantRepository = restaurantRepository
+        mRestaurantView = restaurantView
     }
 
     override fun loadRestaurants(date: Date, forceUpdate: Boolean) {
@@ -51,7 +50,10 @@ class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurant
 
         mRestaurantRepository.getRestaurants(date, object : RestaurantRepository.LoadRestaurantsCallback {
             override fun onRestaurantsLoaded(Restaurants: List<Restaurant>) {
+
+
                 EspressoIdlingResource.decrement() // Set app as idle.
+                mRestaurantView.showEmptyTextView(Restaurants.size == 0)
                 mRestaurantView.setProgressIndicator(false)
                 mRestaurantView.showRestaurants(Restaurants)
             }
@@ -59,7 +61,6 @@ class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurant
     }
 
     override fun openRestaurantDetails(requestedRestaurant: Restaurant) {
-        checkNotNull<Restaurant>(requestedRestaurant, "requestedRestaurant cannot be null!")
         mRestaurantView.showRestaurantDetailUi(requestedRestaurant.id)
     }
 

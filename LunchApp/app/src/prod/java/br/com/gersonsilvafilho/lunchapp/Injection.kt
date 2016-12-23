@@ -12,11 +12,6 @@ import br.com.gersonsilvafilho.lunchapp.data.RestaurantServiceApiImpl
  * a fake instance of the class to isolate the dependencies and run a test hermetically.
  */
  object Injection {
-
-//    fun provideImageFile(): ImageFile {
-//        return FakeImageFileImpl()
-//    }
-
     fun provideRestaurantsRepository(context: Context): RestaurantRepository {
         return RestaurantRepositories.getInMemoryRepoInstance(RestaurantServiceApiImpl(context))!!
     }
