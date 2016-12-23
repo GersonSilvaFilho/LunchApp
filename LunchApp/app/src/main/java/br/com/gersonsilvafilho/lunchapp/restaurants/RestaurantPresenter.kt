@@ -21,13 +21,14 @@ import br.com.gersonsilvafilho.lunchapp.data.Restaurant
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepository
 import br.com.gersonsilvafilho.lunchapp.util.EspressoIdlingResource
 import com.google.common.base.Preconditions.checkNotNull
+import java.util.*
 
 
 /**
  * Listens to user actions from the UI ([RestaurantsFragment]), retrieves the data and updates the
  * UI as required.
  */
-class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurantView: RestaurantContract.View) : RestaurantContract.UserActionsListener {
+class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurantView: RestaurantContract.View, date : Date) : RestaurantContract.UserActionsListener {
 
     private val mRestaurantRepository: RestaurantRepository
     private val mRestaurantView: RestaurantContract.View

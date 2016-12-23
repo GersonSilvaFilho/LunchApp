@@ -9,6 +9,8 @@ import br.com.gersonsilvafilho.lunchapp.restaurants.UsernameContract
 import br.com.gersonsilvafilho.lunchapp.util.UserInfo
 import kotlinx.android.synthetic.main.activity_username.*
 
+
+
 class UsernameActivity : AppCompatActivity(), UsernameContract.View {
 
     private var  mActionsListener: UsernamePresenter? = null
@@ -18,8 +20,9 @@ class UsernameActivity : AppCompatActivity(), UsernameContract.View {
         setContentView(R.layout.activity_username)
         mActionsListener = UsernamePresenter(this)
 
+        val forceChange = intent.getBooleanExtra(UsernameActivity.EXTRA_IS_NAME_CHANGE, false)
         //Check if username has been set
-        if(UserInfo.username != null && UserInfo.username != "")
+        if(UserInfo.username != null && UserInfo.username != "" && !forceChange)
         {
             showRestaurantlUi()
         }
@@ -41,6 +44,12 @@ class UsernameActivity : AppCompatActivity(), UsernameContract.View {
 
     override fun showRestaurantlUi() {
         val intent = Intent(this, RestaurantsActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+    }
+
+    companion object {
+
+        val EXTRA_IS_NAME_CHANGE = "Restaurant_ID"
     }
 }
