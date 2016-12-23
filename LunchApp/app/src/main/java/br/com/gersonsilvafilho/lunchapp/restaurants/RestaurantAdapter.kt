@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import br.com.gersonsilvafilho.lunchapp.R
 import br.com.gersonsilvafilho.lunchapp.data.Restaurant
-import com.google.common.base.Preconditions.checkNotNull
 
+/**
+ * The adapter used on Recycler View on RestaurantsFragment
+ */
 class RestaurantAdapter(restaurants: List<Restaurant>, private val mItemListener: RestaurantAdapter.RestaurantItemListener) : RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
 
     private var mRestaurants: List<Restaurant>? = null
@@ -20,16 +22,16 @@ class RestaurantAdapter(restaurants: List<Restaurant>, private val mItemListener
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
-        val noteView = inflater.inflate(R.layout.item_restaurant, parent, false)
+        val RestaurantView = inflater.inflate(R.layout.item_restaurant, parent, false)
 
-        return ViewHolder(noteView, mItemListener)
+        return ViewHolder(RestaurantView, mItemListener)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val restaurant = mRestaurants!![position]
 
         viewHolder.title.setText(restaurant.title);
-        viewHolder.description.setText(restaurant.description);
+        viewHolder.votes.setText(restaurant.votes.toString());
     }
 
     fun replaceData(restaurants: List<Restaurant>) {
@@ -38,7 +40,7 @@ class RestaurantAdapter(restaurants: List<Restaurant>, private val mItemListener
     }
 
     private fun setList(restaurants: List<Restaurant>) {
-        mRestaurants = checkNotNull<List<Restaurant>>(restaurants)
+        mRestaurants = restaurants
     }
 
     override fun getItemCount(): Int {
@@ -53,18 +55,18 @@ class RestaurantAdapter(restaurants: List<Restaurant>, private val mItemListener
 
         var title: TextView
 
-        var description: TextView
+        var votes: TextView
 
         init {
             title = itemView.findViewById(R.id.restaurant_detail_title) as TextView
-            description = itemView.findViewById(R.id.restaurant_detail_description) as TextView
+            votes = itemView.findViewById(R.id.restaurant_votes) as TextView
             itemView.setOnClickListener(this)
         }
 
         override fun onClick(v: View) {
             val position = adapterPosition
-            val note = getItem(position)
-            mItemListener.onRestaurantClick(note)
+            val Restaurant = getItem(position)
+            mItemListener.onRestaurantClick(Restaurant)
 
         }
     }

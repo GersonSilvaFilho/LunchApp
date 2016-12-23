@@ -12,6 +12,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -45,6 +46,10 @@ android {
         testLogging {
             events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
         }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 }
 
@@ -87,6 +92,18 @@ dependencies {
 
     //Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    //Google Places
+    compile "com.google.android.gms:play-services:$rootProject.ext.googlePlacesVersion"
+
+    //Retrofit
+    compile "com.squareup.retrofit:retrofit:$rootProject.ext.retrofitVersions"
+    compile "com.squareup.retrofit:converter-gson:$rootProject.ext.retrofitVersions"
+
+    //Shared Preferences helper
+    compile "com.chibatching:kotpref:$rootProject.ext.kotPreferences"
+
+    compile 'com.android.support:multidex:+'
 }
 
 /*

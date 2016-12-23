@@ -8,4 +8,30 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="no_data">No data</string>
+    <string name="loading">LOADING</string>
+    <string name="string_name">Name:</string>
+    <string name="string_address">Address:</string>
+    <string name="string_votes">Today Votes:</string>
+    <string name="title_activity_username">Enter your name</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="nav_yesterday_text">Yesterday Result</string>
+    <string name="nav_tomorrow_text">Tomorrow Voting</string>
+    <string name="nav_today_text">Today Restaurant</string>
+    <string name="username_toolbar_text">Register</string>
+    <string name="restaurant_details_topbar">Restaurant Details</string>
+    <string name="toast_username_empty">Username cannot be empty</string>
 </resources>

@@ -33,14 +33,14 @@ public class FakeRestaurantServiceApiImpl implements RestaurantServiceApi {
     }
 
     @Override
-    public void getRestaurant(String noteId, RestaurantsServiceCallback<Restaurant> callback) {
-        Restaurant note = RESTAURANT_SERVICE_DATA.get(noteId);
-        callback.onLoaded(note);
+    public void getRestaurant(String RestaurantId, RestaurantsServiceCallback<Restaurant> callback) {
+        Restaurant Restaurant = RESTAURANT_SERVICE_DATA.get(RestaurantId);
+        callback.onLoaded(Restaurant);
     }
 
     @Override
-    public void saveRestaurant(Restaurant note) {
-        RESTAURANT_SERVICE_DATA.put(note.getId(), note);
+    public void saveRestaurant(Restaurant Restaurant) {
+        RESTAURANT_SERVICE_DATA.put(Restaurant.getId(), Restaurant);
     }
 
 }

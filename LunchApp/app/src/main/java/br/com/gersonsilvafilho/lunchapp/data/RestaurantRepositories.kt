@@ -14,24 +14,16 @@
  * limitations under the License.
  */
 
-package br.com.gersonsilvafilho.lunchapp.data;
+package br.com.gersonsilvafilho.lunchapp.data
 
-import java.util.List;
+object RestaurantRepositories {
 
-/**
- * Defines an interface to the service API that is used by this application. All data request should
- * be piped through this interface.
- */
-public interface RestaurantServiceApi {
+    private var repository: RestaurantRepository? = null
 
-    interface RestaurantsServiceCallback<T> {
-
-        void onLoaded(T notes);
+    @Synchronized fun getInMemoryRepoInstance(restaurantServiceApi: RestaurantServiceApi): RestaurantRepository? {
+        if (null == repository) {
+            repository = InMemoryRestaurantRepository(restaurantServiceApi)
+        }
+        return repository
     }
-
-    void getAllRestaurant(RestaurantsServiceCallback<List<Restaurant>> callback);
-
-    void getRestaurant(String noteId, RestaurantsServiceCallback<Restaurant> callback);
-
-    void saveRestaurant(Restaurant restaurant);
 }

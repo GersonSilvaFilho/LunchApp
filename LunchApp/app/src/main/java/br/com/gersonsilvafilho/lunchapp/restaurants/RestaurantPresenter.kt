@@ -20,11 +20,11 @@ package br.com.gersonsilvafilho.lunchapp.restaurants
 import br.com.gersonsilvafilho.lunchapp.data.Restaurant
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepository
 import br.com.gersonsilvafilho.lunchapp.util.EspressoIdlingResource
-import com.google.common.base.Preconditions.checkNotNull
+import java.util.*
 
 
 /**
- * Listens to user actions from the UI ([NotesFragment]), retrieves the data and updates the
+ * Listens to user actions from the UI ([RestaurantsFragment]), retrieves the data and updates the
  * UI as required.
  */
 class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurantView: RestaurantContract.View) : RestaurantContract.UserActionsListener {
@@ -33,11 +33,11 @@ class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurant
     private val mRestaurantView: RestaurantContract.View
 
     init {
-        mRestaurantRepository = checkNotNull<RestaurantRepository>(restaurantRepository, "restaurantRepository cannot be null")
-        mRestaurantView = checkNotNull<RestaurantContract.View>(restaurantView, "restaurantView cannot be null!")
+        mRestaurantRepository = restaurantRepository
+        mRestaurantView = restaurantView
     }
 
-    override fun loadRestaurants(forceUpdate: Boolean) {
+    override fun loadRestaurants(date: Date, forceUpdate: Boolean) {
         mRestaurantView.setProgressIndicator(true)
         if (forceUpdate) {
             mRestaurantRepository.refreshData()
@@ -48,20 +48,20 @@ class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurant
         EspressoIdlingResource.increment() // App is busy until further notice
 
 
-        mRestaurantRepository.getRestaurants(object : RestaurantRepository.LoadRestaurantsCallback {
-            override fun onRestaurantsLoaded(restaurants: List<Restaurant>) {
+        mRestaurantRepository.getRestaurants(date, object : RestaurantRepository.LoadRestaurantsCallback {
+            override fun onRestaurantsLoaded(Restaurants: List<Restaurant>) {
+
+
                 EspressoIdlingResource.decrement() // Set app as idle.
+                mRestaurantView.showEmptyTextView(Restaurants.size == 0)
                 mRestaurantView.setProgressIndicator(false)
-                mRestaurantView.showRestaurants(restaurants)
+                mRestaurantView.showRestaurants(Restaurants)
             }
-
-
         })
     }
 
     override fun openRestaurantDetails(requestedRestaurant: Restaurant) {
-        checkNotNull<Restaurant>(requestedRestaurant, "requestedNote cannot be null!")
-        mRestaurantView.showNoteDetailUi(requestedRestaurant.id)
+        mRestaurantView.showRestaurantDetailUi(requestedRestaurant.id)
     }
 
 }
