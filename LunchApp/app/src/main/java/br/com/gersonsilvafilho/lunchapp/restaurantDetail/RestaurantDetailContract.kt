@@ -17,6 +17,7 @@
 package br.com.gersonsilvafilho.lunchapp.restaurantDetail
 
 import android.graphics.Bitmap
+import java.util.*
 
 /**
  * This specifies the contract between the view and the presenter.
@@ -50,6 +51,6 @@ interface RestaurantDetailContract {
 
         fun openRestaurant(RestaurantId: String?)
 
-        fun fabButtonClick(userId: String)
+        fun fabButtonClick(userId: String, date: Date)
     }
 }

@@ -20,6 +20,7 @@ import android.graphics.Bitmap
 import br.com.gersonsilvafilho.lunchapp.data.Restaurant
 import br.com.gersonsilvafilho.lunchapp.data.RestaurantRepository
 import com.google.common.base.Preconditions.checkNotNull
+import java.util.*
 
 /**
  * Listens to user actions from the UI ([RestaurantDetailFragment]), retrieves the data and updates
@@ -85,25 +86,26 @@ class RestaurantDetailPresenter(RestaurantsRepository: RestaurantRepository,
         })
     }
 
-    override fun fabButtonClick(userId: String)
+    override fun fabButtonClick(userId: String, date: Date)
     {
-        mRestaurantsRepository.sendRestaurantVote(mRestaurant?.id!!, userId, object : RestaurantRepository.SendRestaurantVoteCallback{
-            override fun onRestaurantVote(result: Map<String,String>) {
-                if (result != null)
+        //Check if the time passed is
+        val calendar = GregorianCalendar.getInstance()
+        calendar.time = date
+        if(calendar.get(Calendar.HOUR_OF_DAY)  > 13)
+        {
+            mRestaurantsDetailView.showSnackbarText("You can just vote before 1 PM")
+            return
+        }
+
+        mRestaurantsRepository.sendRestaurantVote(mRestaurant?.id!!, userId, date, object : RestaurantRepository.SendRestaurantVoteCallback{
+            override fun onRestaurantVote(response: Map<String,String>) {
+                if(response["result"].equals("success"))
                 {
-                    if(result["result"].equals("success"))
-                    {
-                        mRestaurantsDetailView.showSnackbarText("Vote successfully registered!")
-                    }
-                    else
-                    {
-                        mRestaurantsDetailView.showSnackbarText("You can only vote one time per day!")
-                    }
-                    //Show ok!
+                    mRestaurantsDetailView.showSnackbarText("Vote successfully registered!")
                 }
                 else
                 {
-                    mRestaurantsDetailView.showSnackbarText("Failed to register your vote.")
+                    mRestaurantsDetailView.showSnackbarText("You can only vote one time per day!")
                 }
             }
 

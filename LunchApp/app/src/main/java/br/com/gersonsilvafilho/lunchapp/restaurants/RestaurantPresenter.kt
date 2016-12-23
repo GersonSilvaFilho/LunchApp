@@ -28,7 +28,7 @@ import java.util.*
  * Listens to user actions from the UI ([RestaurantsFragment]), retrieves the data and updates the
  * UI as required.
  */
-class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurantView: RestaurantContract.View, date : Date) : RestaurantContract.UserActionsListener {
+class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurantView: RestaurantContract.View) : RestaurantContract.UserActionsListener {
 
     private val mRestaurantRepository: RestaurantRepository
     private val mRestaurantView: RestaurantContract.View
@@ -50,10 +50,10 @@ class RestaurantPresenter(restaurantRepository: RestaurantRepository, restaurant
 
 
         mRestaurantRepository.getRestaurants(date, object : RestaurantRepository.LoadRestaurantsCallback {
-            override fun onRestaurantsLoaded(restaurants: List<Restaurant>) {
+            override fun onRestaurantsLoaded(Restaurants: List<Restaurant>) {
                 EspressoIdlingResource.decrement() // Set app as idle.
                 mRestaurantView.setProgressIndicator(false)
-                mRestaurantView.showRestaurants(restaurants)
+                mRestaurantView.showRestaurants(Restaurants)
             }
         })
     }

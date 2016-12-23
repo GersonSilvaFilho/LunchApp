@@ -72,12 +72,12 @@ class InMemoryRestaurantRepository(restaurantServiceApi: RestaurantServiceApi) :
         })
     }
 
-    override fun sendRestaurantVote(RestaurantId: String, UserId: String, callback: RestaurantRepository.SendRestaurantVoteCallback)
+    override fun sendRestaurantVote(RestaurantId: String, UserId: String, date: Date, callback: RestaurantRepository.SendRestaurantVoteCallback)
     {
         checkNotNull(String)
         checkNotNull(callback)
 
-        mRestaurantServiceApi.sendRestaurantVote(RestaurantId, UserId, object : RestaurantServiceApi.RestaurantsServiceCallback<Map<String,String>>
+        mRestaurantServiceApi.sendRestaurantVote(RestaurantId, UserId, date, object : RestaurantServiceApi.RestaurantsServiceCallback<Map<String,String>>
         {
             override fun onLoaded(voteIsOk: Map<String,String>)
             {

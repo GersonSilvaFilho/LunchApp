@@ -190,13 +190,14 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
                                 }
                             });
                 }
+                photoMetadataBuffer.release();
             }
         });
     }
 
     @Override
-    public void sendRestaurantVote(@NotNull String restaurantId, @NotNull String userId, @NotNull final RestaurantsServiceCallback<Map<String,String>> callback) {
-        Vote vote = new Vote(userId, restaurantId, new Date().getTime()/1000);
+    public void sendRestaurantVote(@NotNull String restaurantId, @NotNull String userId, @NotNull Date date, @NotNull final RestaurantsServiceCallback<Map<String,String>> callback) {
+        Vote vote = new Vote(userId, restaurantId, date.getTime()/1000);
         votesService.SendVote(vote, new Callback<Map<String,String>>() {
             @Override
             public void onResponse(Response<Map<String,String>> response, Retrofit retrofit) {

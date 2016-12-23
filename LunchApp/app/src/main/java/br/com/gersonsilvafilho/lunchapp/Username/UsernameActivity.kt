@@ -17,16 +17,18 @@ class UsernameActivity : AppCompatActivity(), UsernameContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_username)
+
+        getSupportActionBar()?.setTitle(getString(R.string.username_toolbar_text))
 
         //Check if username has been set
         val forceChange = intent.getBooleanExtra(UsernameActivity.EXTRA_IS_NAME_CHANGE, false)
-        if(UserInfo.username != null && UserInfo.username != "" && !forceChange)
+        if(UserInfo.username != "" && !forceChange)
         {
             showRestaurantlUi()
             return
         }
 
-        setContentView(R.layout.activity_username)
         mActionsListener = UsernamePresenter(this)
 
         //Set enter button click

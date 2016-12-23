@@ -52,6 +52,6 @@ interface RestaurantRepository {
 
     fun getRestaurantImageBitmap(RestaurantId: String, imgHeight: Int, imageWidth: Int, callback: GetRestaurantImageCallback)
 
-    fun sendRestaurantVote(RestaurantId: String, UserId: String, callback: SendRestaurantVoteCallback)
+    fun sendRestaurantVote(RestaurantId: String, UserId: String, date: Date, callback: SendRestaurantVoteCallback)
 
 }

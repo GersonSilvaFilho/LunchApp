@@ -23,6 +23,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import br.com.gersonsilvafilho.lunchapp.R
 import br.com.gersonsilvafilho.lunchapp.util.EspressoIdlingResource
+import java.util.*
 
 /**
  * Displays Restaurant details screen.
@@ -36,8 +37,9 @@ class RestaurantDetailActivity : AppCompatActivity() {
 
         // Get the requested Restaurant id
         val RestaurantId = intent.getStringExtra(EXTRA_RESTAURANT_ID)
+        val dateUnix = intent.getLongExtra(EXTRA_DATE, 0)
 
-        initFragment(RestaurantDetailFragment.newInstance(RestaurantId))
+        initFragment(RestaurantDetailFragment.newInstance(RestaurantId, Date(dateUnix)))
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -60,5 +62,6 @@ class RestaurantDetailActivity : AppCompatActivity() {
     companion object {
 
         val EXTRA_RESTAURANT_ID = "Restaurant_ID"
+        val EXTRA_DATE = "date"
     }
 }

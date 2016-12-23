@@ -30,7 +30,7 @@ class RestaurantsActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         toggle.syncState()
 
         //Initial top text
-        getSupportActionBar()?.setTitle("Today Restaurant")
+        getSupportActionBar()?.setTitle(getString(R.string.nav_today_text))
 
         nav_view.setNavigationItemSelectedListener(this)
 
@@ -77,11 +77,15 @@ class RestaurantsActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             toolbar.setTitle(getString(R.string.nav_yesterday_text))
             val cal = Calendar.getInstance()
             cal.add(Calendar.DATE, -1)
+            //This ensure that can't vote from yesterday tab
+            cal.set(Calendar.HOUR_OF_DAY, 14)
             fragment = RestaurantsFragment.newInstance(cal.time)
         } else if (id == R.id.nav_tomorrow) {
             toolbar.setTitle(getString(R.string.nav_tomorrow_text))
             val cal = Calendar.getInstance()
             cal.add(Calendar.DATE, 1)
+            //This ensure that can vote in tomorrow tab
+            cal.set(Calendar.HOUR_OF_DAY, 12)
             fragment = RestaurantsFragment.newInstance(cal.time)
         } else if (id == R.id.nav_username) {
             val intent = Intent(this, UsernameActivity::class.java)

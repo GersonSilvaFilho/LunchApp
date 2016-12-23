@@ -9,10 +9,10 @@ class Restaurant @JvmOverloads constructor(val id: String, val title: String?, v
     val isEmpty: Boolean
         get() = (title == null || "" == title) && (description == null || "" == description)
 
-    override fun equals(o: Any?): Boolean {
-        if (this === o) return true
-        if (o == null || javaClass != o.javaClass) return false
-        val Restaurant = o as Restaurant?
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || javaClass != other.javaClass) return false
+        val Restaurant = other as Restaurant?
         return Objects.equal(id, Restaurant!!.id) &&
                 Objects.equal(title, Restaurant.title) &&
                 Objects.equal(description, Restaurant.description) &&

@@ -33,14 +33,24 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget
 import kotlinx.android.synthetic.main.fragment_detail.*
+import java.util.*
 
 /**
  * Main UI for the Restaurant detail screen.
  */
-class RestaurantDetailFragment : Fragment(), RestaurantDetailContract.View {
+class RestaurantDetailFragment(date : Date) : Fragment(), RestaurantDetailContract.View {
 
 
     private var mActionsListener: RestaurantDetailContract.UserActionsListener? = null
+
+    private var date : Date? = null
+
+    init {
+        this.date = date
+    }
+
+    constructor(): this(Date()) {
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -55,7 +65,7 @@ class RestaurantDetailFragment : Fragment(), RestaurantDetailContract.View {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         fab!!.setOnClickListener { view ->
-            mActionsListener?.fabButtonClick(UserInfo.username)
+            mActionsListener?.fabButtonClick(UserInfo.username, date!!)
         }
     }
 
@@ -125,10 +135,10 @@ class RestaurantDetailFragment : Fragment(), RestaurantDetailContract.View {
 
         val ARGUMENT_Restaurant_ID = "Restaurant_ID"
 
-        fun newInstance(RestaurantId: String): RestaurantDetailFragment {
+        fun newInstance(RestaurantId: String, date: Date): RestaurantDetailFragment {
             val arguments = Bundle()
             arguments.putString(ARGUMENT_Restaurant_ID, RestaurantId)
-            val fragment = RestaurantDetailFragment()
+            val fragment = RestaurantDetailFragment(date)
             fragment.arguments = arguments
             return fragment
         }

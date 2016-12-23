@@ -44,7 +44,7 @@ class RestaurantsFragment(date : Date) : Fragment(), RestaurantContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mListAdapter = RestaurantAdapter(ArrayList<Restaurant>(0), mItemListener)
-        mActionsListener = RestaurantPresenter(Injection.provideRestaurantsRepository(this.context), this, date!!)
+        mActionsListener = RestaurantPresenter(Injection.provideRestaurantsRepository(this.context), this)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -98,6 +98,7 @@ class RestaurantsFragment(date : Date) : Fragment(), RestaurantContract.View {
     override fun showRestaurantDetailUi(RestaurantId: String) {
         val intent = Intent(context, RestaurantDetailActivity::class.java)
         intent.putExtra(RestaurantDetailActivity.EXTRA_RESTAURANT_ID, RestaurantId)
+        intent.putExtra(RestaurantDetailActivity.EXTRA_DATE, date!!.time)
         startActivity(intent)
     }
 

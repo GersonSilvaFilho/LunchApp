@@ -31,4 +31,5 @@
     <string name="nav_yesterday_text">Yesterday Result</string>
     <string name="nav_tomorrow_text">Tomorrow Voting</string>
     <string name="nav_today_text">Today Restaurant</string>
+    <string name="username_toolbar_text">Register</string>
 </resources>

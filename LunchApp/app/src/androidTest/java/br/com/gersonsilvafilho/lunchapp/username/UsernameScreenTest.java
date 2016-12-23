@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package br.com.gersonsilvafilho.lunchapp.restaurants;
+package br.com.gersonsilvafilho.lunchapp.username;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
@@ -29,12 +29,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import br.com.gersonsilvafilho.lunchapp.R;
+import br.com.gersonsilvafilho.lunchapp.restaurants.RestaurantsActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.DrawerActions.open;
 import static android.support.test.espresso.contrib.DrawerMatchers.isClosed;
-import static android.support.test.espresso.contrib.DrawerMatchers.isOpen;
 import static android.support.test.espresso.contrib.NavigationViewActions.navigateTo;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
@@ -49,7 +49,7 @@ import static org.hamcrest.core.AllOf.allOf;
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class AppNavigationTest {
+public class UsernameScreenTest {
 
     /**
      * {@link ActivityTestRule} is a JUnit {@link Rule @Rule} to launch your activity under test.
@@ -59,8 +59,8 @@ public class AppNavigationTest {
      * blocks of Junit tests.
      */
     @Rule
-    public ActivityTestRule<RestaurantsActivity> mActivityTestRule =
-            new ActivityTestRule<>(RestaurantsActivity.class);
+    public ActivityTestRule<UsernameActivity> mActivityTestRule =
+            new ActivityTestRule<>(UsernameActivity.class);
 
     @Test
     public void clickOnTomorrowNav_ShowsTomorrowTab() {
@@ -101,39 +101,4 @@ public class AppNavigationTest {
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
                 .check(matches(withText(expectedYesterdayToolbarText)));
     }
-
-    @Test
-    public void clickOnHomeNav_ShowsHomeTab() {
-        // Open Drawer to click on navigation.
-        onView(withId(R.id.drawer_layout))
-                .check(matches(isClosed(Gravity.LEFT))) // Left Drawer should be closed.
-                .perform(open()); // Open Drawer
-
-        // Start tomorrow view
-        onView(withId(R.id.nav_view))
-                .perform(navigateTo(R.id.nav_home));
-
-        // Check that statistics Activity was opened.
-        String expectedTodayToolbarText = InstrumentationRegistry.getTargetContext()
-                .getString(R.string.nav_today_text);
-
-
-        onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.toolbar))))
-                .check(matches(withText(expectedTodayToolbarText)));
-    }
-
-    @Test
-    public void clickOnAndroidHomeIcon_OpensNavigation() {
-        // Check that left drawer is closed at startup
-        onView(withId(R.id.drawer_layout))
-                .check(matches(isClosed(Gravity.LEFT))); // Left Drawer should be closed.
-
-        // Open Drawer
-        onView(withId(R.id.drawer_layout)).perform(open());
-
-        // Check if drawer is open
-        onView(withId(R.id.drawer_layout))
-                .check(matches(isOpen(Gravity.LEFT))); // Left drawer is open open.
-    }
-
 }
