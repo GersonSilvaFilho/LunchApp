@@ -7,6 +7,7 @@ Android App written in Kotlin that uses MVP pattern.
   - Then user can see a list of near places provided by Google Places API
   - User can select voting for today, yesterday or tomorrow trought navigation drawer
   - User can select the place and see the address and a picture (if API provided)
+  - User can vote to their favorite near restaurant
   - User can change username on Drawer as well
   - User can't vote after 13 PM
   - Users are notified everyday 13 PM that the voting has end
@@ -29,4 +30,4 @@ Android App written in Kotlin that uses MVP pattern.
 ## Could do better
   - I'm starting to study RxJava and Dagger for DI, but didn't have time to use in this project
   - Could have more testing =(
-  
+  - Didn't implemented one time per week restaurant
