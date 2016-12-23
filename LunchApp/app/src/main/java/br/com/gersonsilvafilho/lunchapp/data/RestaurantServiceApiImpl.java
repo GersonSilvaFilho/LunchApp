@@ -55,6 +55,7 @@ public class RestaurantServiceApiImpl implements RestaurantServiceApi, GoogleApi
 
         mGoogleApiClient.connect();
 
+        //Create vote service Instance
         votesService = new VotesService();
     }
 

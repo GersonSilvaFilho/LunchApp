@@ -63,6 +63,7 @@
                     android:layout_height="match_parent"
                     android:text="@string/string_votes"
                     android:textAlignment="center"
+                    android:gravity="center"
                     android:textColor="@android:color/white" />
 
                 <TextView

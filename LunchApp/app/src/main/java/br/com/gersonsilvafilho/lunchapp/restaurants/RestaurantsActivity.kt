@@ -25,21 +25,23 @@ class RestaurantsActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_restaurants)
         setSupportActionBar(toolbar)
-
         val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.setDrawerListener(toggle)
         toggle.syncState()
+
+        //Initial top text
+        getSupportActionBar()?.setTitle("Today Restaurant")
 
         nav_view.setNavigationItemSelectedListener(this)
 
         val username_textview = nav_view.getHeaderView(0).findViewById(R.id.nav_username) as TextView
 
         username_textview.setText(UserInfo.username)
-
         if (null == savedInstanceState) {
             initFragment(RestaurantsFragment.newInstance(Date()))
         }
     }
+
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
@@ -69,12 +71,15 @@ class RestaurantsActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 
         var fragment: Fragment? = null
         if (id == R.id.nav_home) {
+            toolbar.setTitle("Today Restaurant")
             fragment = RestaurantsFragment.newInstance(Date())
         } else if (id == R.id.nav_yesterday) {
+            toolbar.setTitle("Yesterday Result")
             val cal = Calendar.getInstance()
             cal.add(Calendar.DATE, -1)
             fragment = RestaurantsFragment.newInstance(cal.time)
         } else if (id == R.id.nav_tomorrow) {
+            toolbar.setTitle("Tomorrow Voting")
             val cal = Calendar.getInstance()
             cal.add(Calendar.DATE, 1)
             fragment = RestaurantsFragment.newInstance(cal.time)
