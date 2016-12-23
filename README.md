@@ -15,11 +15,11 @@ Android App written in Kotlin that uses MVP pattern.
   - The minimum Android API is 10 o/
   
 ## Limitations
-  - The user must have a connection, didn't provide any persistance of places
-  - I used the Google Places API for currentLocation that should provide near places, but it's not retrieving restaurants everywhere.
+  - The user must have a connection, didn't provide any persistance of places
+  - I used the Google Places API for currentLocation that should provide near places, but it's not retrieving restaurants everywhere.
   - User will be asked to enable GPS location
   - I just implemented some test cases because have no more time =(
-  - I didn't have good results with the images from google places, so i used a default image on listing and when there are no images on detail
+  - I didn't have good results with the images from google places, so i used a default image on listing and when there are no images on detail
   
 ## Technologies
   - Used Kotlin language for the App and Java to implement some tests
