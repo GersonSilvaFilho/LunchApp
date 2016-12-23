@@ -59,16 +59,30 @@ class InMemoryRestaurantRepository(restaurantServiceApi: RestaurantServiceApi) :
         mCachedRestaurants = null
     }
 
-    override fun getRestaurantImageBitmap(RestaurantId: String, imgHeight: Int, imageWidth: Int, callback: RestaurantRepository.GetRestaurantImageCallback<Bitmap>) {
+    override fun getRestaurantImageBitmap(RestaurantId: String, imgHeight: Int, imageWidth: Int, callback: RestaurantRepository.GetRestaurantImageCallback) {
         checkNotNull(String)
         checkNotNull(callback)
         // Load Restaurants matching the id always directly from the API.
-        mRestaurantServiceApi.getRestaurantImageBitmap(RestaurantId, imgHeight, imageWidth, object : RestaurantServiceApi.RestaurantsImageUrlCallback<Bitmap>
+        mRestaurantServiceApi.getRestaurantImageBitmap(RestaurantId, imgHeight, imageWidth, object : RestaurantServiceApi.RestaurantsServiceCallback<Bitmap>
         {
             override fun onLoaded(bitmap: Bitmap) {
                 callback.onRestaurantImageLoaded(bitmap)
             }
-        });
+        })
+    }
+
+    override fun sendRestaurantVote(RestaurantId: String, UserId: String, callback: RestaurantRepository.SendRestaurantVoteCallback)
+    {
+        checkNotNull(String)
+        checkNotNull(callback)
+
+        mRestaurantServiceApi.sendRestaurantVote(RestaurantId, UserId, object : RestaurantServiceApi.RestaurantsServiceCallback<Map<String,String>>
+        {
+            override fun onLoaded(voteIsOk: Map<String,String>)
+            {
+                callback.onRestaurantVote(voteIsOk)
+            }
+        })
     }
 
 }

@@ -33,8 +33,12 @@ interface RestaurantRepository {
         fun onRestaurantsLoaded(Restaurant: Restaurant?)
     }
 
-    interface GetRestaurantImageCallback<T> {
-        fun onRestaurantImageLoaded(bitmap: T)
+    interface GetRestaurantImageCallback {
+        fun onRestaurantImageLoaded(bitmap: Bitmap)
+    }
+
+    interface SendRestaurantVoteCallback {
+        fun onRestaurantVote(response: Map<String,String>)
     }
 
     fun getRestaurants(callback: LoadRestaurantsCallback)
@@ -45,6 +49,7 @@ interface RestaurantRepository {
 
     fun refreshData()
 
-    fun getRestaurantImageBitmap(RestaurantId: String, imgHeight: Int, imageWidth: Int, callback: GetRestaurantImageCallback<Bitmap>)
+    fun getRestaurantImageBitmap(RestaurantId: String, imgHeight: Int, imageWidth: Int, callback: GetRestaurantImageCallback)
 
+    fun sendRestaurantVote(RestaurantId: String, UserId: String, callback: SendRestaurantVoteCallback)
 }

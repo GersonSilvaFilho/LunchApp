@@ -4,6 +4,7 @@ import com.google.common.base.Objects
 
 class Restaurant @JvmOverloads constructor(val id: String, val title: String?, val description: String?, val imageUrl: String? = null) {
 
+    var votes : Int = 0;
 
     val isEmpty: Boolean
         get() = (title == null || "" == title) && (description == null || "" == description)
@@ -20,5 +21,10 @@ class Restaurant @JvmOverloads constructor(val id: String, val title: String?, v
 
     override fun hashCode(): Int {
         return Objects.hashCode(id, title, description, imageUrl)
+    }
+
+    fun incrementVotes()
+    {
+        votes++
     }
 }

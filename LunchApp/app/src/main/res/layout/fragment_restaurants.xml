@@ -5,13 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:text="TESTEEEEE"-->
-        <!--android:gravity="center"/>-->
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/restaurant_list"
         xmlns:android="http://schemas.android.com/apk/res/android"

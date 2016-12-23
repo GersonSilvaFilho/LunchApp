@@ -42,10 +42,14 @@ interface RestaurantDetailContract {
         fun hideDescription()
 
         fun showDescription(description: String)
+
+        fun showSnackbarText(textToShow: String)
     }
 
     interface UserActionsListener {
 
         fun openRestaurant(RestaurantId: String?)
+
+        fun fabButtonClick(userId: String)
     }
 }
