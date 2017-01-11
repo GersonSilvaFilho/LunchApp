@@ -16,11 +16,16 @@
 
 package br.com.gersonsilvafilho.lunchapp.data;
 
+import android.graphics.Bitmap;
 import android.support.v4.util.ArrayMap;
 
 import com.google.common.collect.Lists;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class FakeRestaurantServiceApiImpl implements RestaurantServiceApi {
 
@@ -28,19 +33,28 @@ public class FakeRestaurantServiceApiImpl implements RestaurantServiceApi {
     private static final ArrayMap<String, Restaurant> RESTAURANT_SERVICE_DATA = new ArrayMap();
 
     @Override
-    public void getAllRestaurant(RestaurantsServiceCallback<List<Restaurant>> callback) {
-        callback.onLoaded(Lists.newArrayList(RESTAURANT_SERVICE_DATA.values()));
-    }
-
-    @Override
-    public void getRestaurant(String RestaurantId, RestaurantsServiceCallback<Restaurant> callback) {
-        Restaurant Restaurant = RESTAURANT_SERVICE_DATA.get(RestaurantId);
-        callback.onLoaded(Restaurant);
-    }
-
-    @Override
     public void saveRestaurant(Restaurant Restaurant) {
         RESTAURANT_SERVICE_DATA.put(Restaurant.getId(), Restaurant);
     }
 
+    @Override
+    public void getAllRestaurant(@NotNull Date date, @NotNull RestaurantsServiceCallback<List<Restaurant>> callback) {
+        callback.onLoaded(Lists.newArrayList(RESTAURANT_SERVICE_DATA.values()));
+    }
+
+    @Override
+    public void getRestaurantImageBitmap(@NotNull String RestaurantId, int imgHeight, int imageWidth, @NotNull RestaurantsServiceCallback<Bitmap> callback) {
+
+    }
+
+    @Override
+    public void sendRestaurantVote(@NotNull String restaurantId, @NotNull String userId, @NotNull Date date, @NotNull RestaurantsServiceCallback<Map<String, String>> callback) {
+
+    }
+
+    @Override
+    public void getRestaurant(@NotNull String RestaurantId, @NotNull Date date, @NotNull RestaurantsServiceCallback<Restaurant> callback) {
+        Restaurant Restaurant = RESTAURANT_SERVICE_DATA.get(RestaurantId);
+        callback.onLoaded(Restaurant);
+    }
 }
